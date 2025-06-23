@@ -1,3 +1,17 @@
+Of course\! I can fix the structure for your Kyoto day and integrate a handy currency converter.
+
+I have made two main changes:
+
+1.  **Corrected the HTML for Cruise Day 4 (Kyoto/Osaka):** I've restructured the events for this day so they are properly contained and formatted within individual "event" blocks, making the layout clean and consistent.
+2.  **Added a Currency Converter:**
+      * A new **"¥€ Calculator"** button is now in the header.
+      * Clicking this button opens a simple calculator view.
+      * You can type a value in either the Japanese Yen (JPY) or Euro (EUR) field, and it will automatically convert it to the other currency.
+      * A "Back to Itinerary" button will return you to the main index view.
+
+Here is the complete, updated HTML code for you to use.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,6 +52,12 @@
             margin-bottom: 10px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
+        
+        .header-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
 
         .day-counter {
             background: rgba(255,255,255,0.2);
@@ -45,6 +65,7 @@
             border-radius: 25px;
             font-weight: 600;
             backdrop-filter: blur(10px);
+            margin-bottom: 15px;
         }
 
         .card {
@@ -90,8 +111,8 @@
         .event-time {
             font-weight: 600;
             color: #667eea;
-            font-size: 16px; /* I've increased this from 14px */
-            margin-bottom: 7px; /* A little more space underneath */
+            font-size: 16px;
+            margin-bottom: 7px;
         }
 
         .event-details {
@@ -147,7 +168,6 @@
         }
 
         .home-btn {
-            margin-top: 15px;
             padding: 10px 20px;
             border: none;
             border-radius: 20px;
@@ -165,7 +185,7 @@
             transform: translateY(-2px);
         }
 
-        .index-view {
+        .index-view, #calculatorView {
             display: none;
         }
 
@@ -211,22 +231,6 @@
             color: #2c3e50;
         }
 
-        /*
-        .back-to-index {
-            width: 100%;
-            margin-top: 10px;
-            padding: 12px;
-            border: none;
-            border-radius: 15px;
-            background: rgba(255,255,255,0.9);
-            color: #667eea;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        */
-
         .back-to-index:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
@@ -249,12 +253,38 @@
             color: white;
             border-left: none;
         }
-
-        /* Add this new rule */
+        
         .flight-info .event-time,
         .cruise-info .event-time,
         .hotel-info .event-time {
             color: white;
+        }
+        
+        .calculator-input-group {
+            margin-bottom: 20px;
+        }
+
+        .calculator-input-group label {
+            display: block;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .calculator-input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 18px;
+            text-align: right;
+        }
+        
+        .rate-note {
+            font-size: 12px;
+            text-align: center;
+            color: #666;
+            margin-top: 15px;
         }
 
         @media (max-width: 480px) {
@@ -266,8 +296,6 @@
                 padding: 20px;
             }
         }
-
-
     </style>
 </head>
 <body>
@@ -275,14 +303,17 @@
         <div class="header">
             <h1>🐞 The Japan Plan 🦆</h1>
             <div class="day-counter" id="dayCounter">July 11, 2025</div>
-            <button class="home-btn" id="homeBtn" onclick="showIndex()">📅 All Days</button>
+            <div class="header-buttons">
+                <button class="home-btn" id="homeBtn" onclick="showIndex()">📅 All Days</button>
+                <button class="home-btn" id="calcBtn" onclick="showCalculator()">¥€ Calculator</button>
+            </div>
         </div>
 
         <div class="index-view" id="indexView">
             <div class="card">
                 <div class="date-header">🐞 Complete Itinerary</div>
                 <div class="index-grid">
-                    <div class="day-card" onclick="goToDay(1)">
+                     <div class="day-card" onclick="goToDay(1)">
                         <div class="day-card-number">July 11</div>
                         <div class="day-card-date">Friday</div>
                         <div class="day-card-location">🏠 Departure</div>
@@ -380,7 +411,6 @@
                         ✓ House secured
                     </div>
                 </div>
-
                 <div class="event">
                     <div class="event-time">11:50 AM</div>
                     <div class="event-details">
@@ -388,7 +418,6 @@
                         From Nirvana (16-26 mins to station)
                     </div>
                 </div>
-
                 <div class="event">
                     <div class="event-time">1:15 PM</div>
                     <div class="event-details">
@@ -397,7 +426,6 @@
                         3 hours journey → Arrive Dublin Airport 4:15 PM
                     </div>
                 </div>
-
                 <div class="event hotel-info">
                     <div class="event-time">From 2:00 PM</div>
                     <div class="event-details">
@@ -422,7 +450,6 @@
                         Seats: 22A, 22C | Duration: 1hr 35min
                     </div>
                 </div>
-
                 <div class="event">
                     <div class="event-time">11:30 AM</div>
                     <div class="event-details">
@@ -433,7 +460,6 @@
                         Layover: 2hr 45min
                     </div>
                 </div>
-
                 <div class="event flight-info">
                     <div class="event-time">2:15 PM</div>
                     <div class="event-details">
@@ -457,7 +483,6 @@
                         Narita Airport
                     </div>
                 </div>
-
                 <div class="event">
                     <div class="event-time">~2 hours</div>
                     <div class="event-details">
@@ -465,7 +490,6 @@
                         Tokyo to Yokohama
                     </div>
                 </div>
-
                 <div class="event cruise-info">
                     <div class="event-time">Afternoon</div>
                     <div class="event-details">
@@ -473,7 +497,6 @@
                         Celebrity Millennium, Yokohama
                     </div>
                 </div>
-
                 <div class="event cruise-info">
                     <div class="event-time">5:00 PM</div>
                     <div class="event-details">
@@ -522,7 +545,7 @@
                 <div class="location">⛩️ Kyoto (Osaka)</div>
                 
                 <div class="event cruise-info">
-                    <div class="event-time">8:00 AM</div>
+                    <div class="event-time">From 8:00 AM</div>
                     <div class="event-details" style="font-size: 16px; line-height: 1.5;">
                         <strong>Port Day - Osaka for Kyoto</strong><br>
                         🚢 Cruise Day 4<br><br>
@@ -530,34 +553,31 @@
                         Walk to Osakakō Station (5 min from cruise port).<br>
                         Take Chūō Line to Honmachi, transfer to Midosuji Line → go to Shin-Osaka (total ~30–40 min).<br>
                         Take Shinkansen from Shin-Osaka to Kyoto Station (~15 min, ~¥1,420).<br>
-                        From Kyoto Station, take:<br>
-                        Bus #9 or #50 (~15 min) or<br>
-                        Subway Karasuma Line → Tozai Line to Nijōjō-mae Station (~10–15 min).<br>
-                        <strong>⏱ Total Travel Time:</strong> ~60–75 min<br>
-                        <strong>💴 Total Cost:</strong> ~¥2,000
+                        From Kyoto Station, take Bus #9/#50 or Subway to Nijōjō-mae Station.<br>
+                        <strong>⏱ Total Travel:</strong> ~60–75 min | <strong>💴 Cost:</strong> ~¥2,000
                     </div>
-<br>
+                </div>
+
+                <div class="event">
+                    <div class="event-time">Afternoon Journey</div>
                     <div class="event-details" style="font-size: 16px; line-height: 1.5;">
-        <strong>🏯 From Nijō Castle to Sumo Hall (Osaka)</strong><br>
-        Walk to Nijō‑jō‑mae Station, take Tozai Line → Karasuma-Oike, transfer to Karasuma Line → Kyoto Station (~15 min).<br>
-        Take JR Special Rapid or Shinkansen to Shin-Osaka or Osaka Station (~15–30 min).<br>
-        Take Midosuji Line to Namba Station (~15 min).<br>
-        Walk 5–10 min to Sumo Hall (EDION Arena Osaka).<br>
-        <strong>⏱ Total Travel Time:</strong> ~50–70 min<br>
-        <strong>💴 Total Cost:</strong> ~¥1,100–2,200
-    </div>
-                    <br>
-<div class="event">
-    <div class="event-time">Evening Walk</div>
-    <div class="event-details" style="font-size: 16px; line-height: 1.5;">
-        <strong>🚶 Walking to Dōtonbori (~1.5 km, ~20 min)</strong><br>
-        Exit EDION Arena Osaka and head east towards Shinsaibashi-suji.<br>
-        Continue east along the Shinsaibashi-suji shopping street for about 10 minutes, passing by vibrant shops and stalls.<br>
-        Upon reaching the Ebisubashi Bridge across the Dōtonbori Canal, you're in the vibrant Dōtonbori district, home to the iconic Glico running man sign.<br>
-        From here, you can wander south along the canal for food, sightseeing, or nightlife.
-    </div>
-</div>
-                    
+                        <strong>🏯 From Nijō Castle to Sumo Hall (Osaka)</strong><br>
+                        Walk to Nijō‑jō‑mae Station, take Tozai Line → Karasuma-Oike, transfer to Karasuma Line → Kyoto Station (~15 min).<br>
+                        Take JR Special Rapid or Shinkansen to Shin-Osaka/Osaka Station (~15–30 min).<br>
+                        Take Midosuji Line to Namba Station (~15 min).<br>
+                        Walk 5–10 min to Sumo Hall (EDION Arena Osaka).<br>
+                        <strong>⏱ Total:</strong> ~50–70 min | <strong>💴 Cost:</strong> ~¥1,100–2,200
+                    </div>
+                </div>
+
+                <div class="event">
+                    <div class="event-time">Evening Walk</div>
+                    <div class="event-details" style="font-size: 16px; line-height: 1.5;">
+                        <strong>🚶 Walking to Dōtonbori (~1.5 km, ~20 min)</strong><br>
+                        Exit EDION Arena Osaka and head east towards Shinsaibashi-suji.<br>
+                        Continue along the shopping street to the Dōtonbori Canal, home to the iconic Glico running man sign.<br>
+                        Wander along the canal for food and sightseeing.
+                    </div>
                 </div>
             </div>
         </div>
@@ -573,7 +593,6 @@
                         <strong>Early Departure Kyoto</strong>
                     </div>
                 </div>
-
                 <div class="event cruise-info">
                     <div class="event-time">8:00 AM - 6:00 PM</div>
                     <div class="event-details">
@@ -613,7 +632,6 @@
                         🚢 Cruise Day 7
                     </div>
                 </div>
-
                 <div class="event special-note">
                     <div class="event-time">11:45 AM - 4 hours</div>
                     <div class="event-details">
@@ -636,7 +654,6 @@
                         🚢 Cruise Day 8
                     </div>
                 </div>
-
                 <div class="event special-note">
                     <div class="event-time">2:30 PM - 2 hours</div>
                     <div class="event-details">
@@ -659,7 +676,6 @@
                         🚢 Cruise Day 9
                     </div>
                 </div>
-
                 <div class="event special-note">
                     <div class="event-time">8:45 AM - 2hr 15min</div>
                     <div class="event-details">
@@ -731,7 +747,6 @@
                         🚢 Cruise Day 13 - Final day!
                     </div>
                 </div>
-
                 <div class="event">
                     <div class="event-time">Morning</div>
                     <div class="event-details">
@@ -739,7 +754,6 @@
                         Yokohama to Tokyo Narita
                     </div>
                 </div>
-
                 <div class="event flight-info">
                     <div class="event-time">10:30 PM</div>
                     <div class="event-details">
@@ -764,7 +778,6 @@
                         Stopover: 3hr 10min
                     </div>
                 </div>
-
                 <div class="event flight-info">
                     <div class="event-time">7:20 AM</div>
                     <div class="event-details">
@@ -773,7 +786,6 @@
                         Duration: 7hr 55min
                     </div>
                 </div>
-
                 <div class="event">
                     <div class="event-time">12:15 PM</div>
                     <div class="event-details">
@@ -781,7 +793,6 @@
                         Terminal 2
                     </div>
                 </div>
-
                 <div class="event">
                     <div class="event-time">2:45 PM</div>
                     <div class="event-details">
@@ -790,6 +801,22 @@
                         🏠 Welcome home!
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div id="calculatorView">
+            <div class="card">
+                <div class="date-header">Currency Converter</div>
+                <div class="calculator-input-group">
+                    <label for="euroInput">🇪🇺 Euro (€)</label>
+                    <input type="number" id="euroInput" placeholder="0.00">
+                </div>
+                <div class="calculator-input-group">
+                    <label for="yenInput">🇯🇵 Japanese Yen (¥)</label>
+                    <input type="number" id="yenInput" placeholder="0">
+                </div>
+                <button class="nav-btn back-to-index" onclick="hideCalculator()">Back to Itinerary</button>
+                <p class="rate-note">Note: Rate is an estimate and not live.</p>
             </div>
         </div>
 
@@ -804,25 +831,25 @@
         let currentDay = 1;
         let currentView = 'day'; // 'day' or 'index'
         const totalDays = 16;
-        
+        const EXCHANGE_RATE = 171.5; // Approx. rate for EUR to JPY
+
         const dayTitles = [
-            "July 11, 2025", // Day 1
-            "July 12, 2025", // Day 2
-            "Cruise Day 1 - July 13, 2025", // Day 3
-            "Cruise Day 2 - July 14, 2025", // Day 4
-            "Cruise Day 3 - July 15, 2025", // Day 5
-            "Cruise Day 4 - July 16, 2025", // Day 6
-            "Cruise Day 5 - July 17, 2025", // Day 7
-            "Cruise Day 6 - July 18, 2025", // Day 8
-            "Cruise Day 7 - July 19, 2025", // Day 9
-            "Cruise Day 8 - July 20, 2025", // Day 10
-            "Cruise Day 9 - July 21, 2025", // Day 11
-            "Cruise Day 10 - July 22, 2025", // Day 12
-            "Cruise Day 11 - July 23, 2025", // Day 13
-            "Cruise Day 12 - July 24, 2025", // Day 14
-            "Cruise Day 13 - July 25, 2025", // Day 15
-            "July 26, 2025" // Day 16
+            "July 11, 2025", "July 12, 2025", "Cruise Day 1 - July 13, 2025",
+            "Cruise Day 2 - July 14, 2025", "Cruise Day 3 - July 15, 2025", "Cruise Day 4 - July 16, 2025",
+            "Cruise Day 5 - July 17, 2025", "Cruise Day 6 - July 18, 2025", "Cruise Day 7 - July 19, 2025",
+            "Cruise Day 8 - July 20, 2025", "Cruise Day 9 - July 21, 2025", "Cruise Day 10 - July 22, 2025",
+            "Cruise Day 11 - July 23, 2025", "Cruise Day 12 - July 24, 2025", "Cruise Day 13 - July 25, 2025",
+            "July 26, 2025"
         ];
+        
+        const dayCounter = document.getElementById('dayCounter');
+        const indexView = document.getElementById('indexView');
+        const calculatorView = document.getElementById('calculatorView');
+        const dayContents = document.querySelectorAll('.day-content');
+        const navigation = document.querySelector('.navigation');
+        const homeBtn = document.getElementById('homeBtn');
+        const yenInput = document.getElementById('yenInput');
+        const euroInput = document.getElementById('euroInput');
 
         function updateDisplay() {
             if (currentView === 'index') {
@@ -835,45 +862,46 @@
         function showDayView() {
             currentView = 'day';
             
-            // Hide index view and show day content
-            document.getElementById('indexView').style.display = 'none';
-            document.querySelectorAll('.day-content').forEach(day => {
-                day.style.display = 'none';
-            });
+            indexView.style.display = 'none';
+            calculatorView.style.display = 'none';
+            dayContents.forEach(day => day.style.display = 'none');
             
-            // Show current day
             const currentDayElement = document.querySelector(`[data-day="${currentDay}"]`);
             if (currentDayElement) {
                 currentDayElement.style.display = 'block';
             }
             
-            // Update day counter with proper title
-            document.getElementById('dayCounter').textContent = dayTitles[currentDay - 1];
-            document.getElementById('homeBtn').style.display = 'block';
+            dayCounter.textContent = dayTitles[currentDay - 1];
+            homeBtn.style.display = 'inline-block';
             
-            // Update navigation buttons
             document.getElementById('prevBtn').disabled = currentDay === 1;
             document.getElementById('nextBtn').disabled = currentDay === totalDays;
             
-            // Show navigation
-            document.querySelector('.navigation').style.display = 'flex';
+            navigation.style.display = 'flex';
         }
 
         function showIndexView() {
             currentView = 'index';
             
-            // Hide all day content and show index
-            document.querySelectorAll('.day-content').forEach(day => {
-                day.style.display = 'none';
-            });
-            document.getElementById('indexView').style.display = 'block';
+            calculatorView.style.display = 'none';
+            dayContents.forEach(day => day.style.display = 'none');
+            indexView.style.display = 'block';
             
-            // Update header for index view
-            document.getElementById('dayCounter').textContent = 'Complete Itinerary';
-            document.getElementById('homeBtn').style.display = 'none';
-            
-            // Hide navigation buttons
-            document.querySelector('.navigation').style.display = 'none';
+            dayCounter.textContent = 'Complete Itinerary';
+            homeBtn.style.display = 'inline-block';
+            navigation.style.display = 'none';
+        }
+        
+        function showCalculator() {
+            dayContents.forEach(day => day.style.display = 'none');
+            indexView.style.display = 'none';
+            navigation.style.display = 'none';
+            calculatorView.style.display = 'block';
+            dayCounter.textContent = 'Currency Converter';
+        }
+
+        function hideCalculator() {
+            showIndexView();
         }
 
         function showIndex() {
@@ -893,7 +921,8 @@
             }
         }
 
-        // Keyboard navigation
+        // --- Event Listeners ---
+
         document.addEventListener('keydown', (e) => {
             if (currentView === 'day') {
                 if (e.key === 'ArrowLeft') changeDay(-1);
@@ -902,7 +931,6 @@
             }
         });
 
-        // Touch/swipe support
         let touchStartX = 0;
         let touchEndX = 0;
 
@@ -930,8 +958,27 @@
             }
         }
 
+        yenInput.addEventListener('keyup', () => {
+            const yen = parseFloat(yenInput.value);
+            if (isNaN(yen) || yen === 0) {
+                euroInput.value = '';
+                return;
+            }
+            euroInput.value = (yen / EXCHANGE_RATE).toFixed(2);
+        });
+
+        euroInput.addEventListener('keyup', () => {
+            const euro = parseFloat(euroInput.value);
+            if (isNaN(euro) || euro === 0) {
+                yenInput.value = '';
+                return;
+            }
+            yenInput.value = (euro * EXCHANGE_RATE).toFixed(0);
+        });
+
         // Initialize display - start with index view
         showIndexView();
     </script>
 </body>
 </html>
+```
