@@ -1,6 +1,924 @@
-<html>
-<head><title>Japan</title></head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japan Cruise Itinerary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .day-counter {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .date-header {
+            font-size: 18px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .location {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .event {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .event:last-child {
+            margin-bottom: 0;
+        }
+
+        .event-time {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 16px; /* I've increased this from 14px */
+            margin-bottom: 7px; /* A little more space underneath */
+        }
+
+        .event-details {
+            color: #555;
+            line-height: 1.4;
+            font-size: 20px;
+        }
+
+        .special-note {
+            background: linear-gradient(45deg, #ffeaa7, #fab1a0);
+            border-left-color: #e17055;
+            font-weight: 500;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.9);
+            color: #667eea;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .nav-btn:active {
+            transform: translateY(0);
+        }
+
+        .day-hidden {
+            display: none;
+        }
+
+        .home-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.3);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 14px;
+        }
+
+        .home-btn:hover {
+            background: rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+        }
+
+        .index-view {
+            display: none;
+        }
+
+        .index-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .day-card {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .day-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            background: rgba(255,255,255,0.95);
+        }
+
+        .day-card-number {
+            font-size: 18px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .day-card-date {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .day-card-location {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        /*
+        .back-to-index {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.9);
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        */
+
+        .back-to-index:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .flight-info {
+            background: linear-gradient(45deg, #74b9ff, #0984e3);
+            color: white;
+            border-left: none;
+        }
+
+        .cruise-info {
+            background: linear-gradient(45deg, #00b894, #55a3ff);
+            color: white;
+            border-left: none;
+        }
+
+        .hotel-info {
+            background: linear-gradient(45deg, #fdcb6e, #e17055);
+            color: white;
+            border-left: none;
+        }
+
+        /* Add this new rule */
+        .flight-info .event-time,
+        .cruise-info .event-time,
+        .hotel-info .event-time {
+            color: white;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+
+
+    </style>
+</head>
 <body>
-  <h1>Hello from Japan!</h1>
+    <div class="container">
+        <div class="header">
+            <h1>🐞 The Japan Plan 🦆</h1>
+            <div class="day-counter" id="dayCounter">July 11, 2025</div>
+            <button class="home-btn" id="homeBtn" onclick="showIndex()">📅 All Days</button>
+        </div>
+
+        <!-- Index View -->
+        <div class="index-view" id="indexView">
+            <div class="card">
+                <div class="date-header">🐞 Complete Itinerary</div>
+                <div class="index-grid">
+                    <div class="day-card" onclick="goToDay(1)">
+                        <div class="day-card-number">July 11</div>
+                        <div class="day-card-date">Friday</div>
+                        <div class="day-card-location">🏠 Departure</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(2)">
+                        <div class="day-card-number">July 12</div>
+                        <div class="day-card-date">Saturday</div>
+                        <div class="day-card-location">✈️ To Tokyo</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(3)">
+                        <div class="day-card-number">Cruise Day 1</div>
+                        <div class="day-card-date">July 13</div>
+                        <div class="day-card-location">🚢 Embark</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(4)">
+                        <div class="day-card-number">Cruise Day 2</div>
+                        <div class="day-card-date">July 14</div>
+                        <div class="day-card-location">🗻 Mt. Fuji</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(5)">
+                        <div class="day-card-number">Cruise Day 3</div>
+                        <div class="day-card-date">July 15</div>
+                        <div class="day-card-location">🌊 At Sea</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(6)">
+                        <div class="day-card-number">Cruise Day 4</div>
+                        <div class="day-card-date">July 16</div>
+                        <div class="day-card-location">⛩️ Kyoto</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(7)">
+                        <div class="day-card-number">Cruise Day 5</div>
+                        <div class="day-card-date">July 17</div>
+                        <div class="day-card-location">🥩 Kobe</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(8)">
+                        <div class="day-card-number">Cruise Day 6</div>
+                        <div class="day-card-date">July 18</div>
+                        <div class="day-card-location">🏯 Kochi</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(9)">
+                        <div class="day-card-number">Cruise Day 7</div>
+                        <div class="day-card-date">July 19</div>
+                        <div class="day-card-location">🕊️ Hiroshima</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(10)">
+                        <div class="day-card-number">Cruise Day 8</div>
+                        <div class="day-card-date">July 20</div>
+                        <div class="day-card-location">🌊 At Sea</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(11)">
+                        <div class="day-card-number">Cruise Day 9</div>
+                        <div class="day-card-date">July 21</div>
+                        <div class="day-card-location">🏮 Nagasaki</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(12)">
+                        <div class="day-card-number">Cruise Day 10</div>
+                        <div class="day-card-date">July 22</div>
+                        <div class="day-card-location">🌺 Jeju Island</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(13)">
+                        <div class="day-card-number">Cruise Day 11</div>
+                        <div class="day-card-date">July 23</div>
+                        <div class="day-card-location">🌋 Kagoshima</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(14)">
+                        <div class="day-card-number">Cruise Day 12</div>
+                        <div class="day-card-date">July 24</div>
+                        <div class="day-card-location">🌊 At Sea</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(15)">
+                        <div class="day-card-number">Cruise Day 13</div>
+                        <div class="day-card-date">July 25</div>
+                        <div class="day-card-location">🛫 Disembark</div>
+                    </div>
+                    <div class="day-card" onclick="goToDay(16)">
+                        <div class="day-card-number">July 26</div>
+                        <div class="day-card-date">Saturday</div>
+                        <div class="day-card-location">🏠 Home</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 1: Home Check & Travel -->
+        <div class="day-content" data-day="1">
+            <div class="card">
+                <div class="date-header">Friday, July 11, 2025</div>
+                <div class="location">🏠 Departure Day</div>
+                
+                <div class="event">
+                    <div class="event-time">10:00 AM</div>
+                    <div class="event-details">
+                        <strong>HOME CHECK</strong><br>
+                        ✓ Passports<br>
+                        ✓ Pills, Bags, Chargers<br>
+                        ✓ House secured
+                    </div>
+                </div>
+
+                <div class="event">
+                    <div class="event-time">11:50 AM</div>
+                    <div class="event-details">
+                        <strong>Taxi/Uber Pickup</strong><br>
+                        From Nirvana (16-26 mins to station)
+                    </div>
+                </div>
+
+                <div class="event">
+                    <div class="event-time">1:15 PM</div>
+                    <div class="event-details">
+                        <strong>Bus to Dublin</strong><br>
+                        Galway Coach Station - Citylink<br>
+                        3 hours journey → Arrive Dublin Airport 4:15 PM
+                    </div>
+                </div>
+
+                <div class="event hotel-info">
+                    <div class="event-time">From 2:00 PM</div>
+                    <div class="event-details">
+                        <strong>Hotel Check-in</strong><br>
+                        Radisson Blu Hotel, Dublin Airport<br>
+                        Reservation: 1W1S7MP4
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 2: Outbound Flights -->
+        <div class="day-content day-hidden" data-day="2">
+            <div class="card">
+                <div class="date-header">Saturday, July 12, 2025</div>
+                <div class="location">✈️ Travel to Tokyo</div>
+                
+                <div class="event flight-info">
+                    <div class="event-time">8:55 AM</div>
+                    <div class="event-details">
+                        <strong>Dublin → Amsterdam</strong><br>
+                        KL1136 | Terminal 1<br>
+                        Seats: 22A, 22C | Duration: 1hr 35min
+                    </div>
+                </div>
+
+                <div class="event">
+                    <div class="event-time">11:30 AM</div>
+                    <div class="event-details">
+                        <strong>Amsterdam Arrival</strong><br>
+                        Lounge Access Codes:<br>
+                        074-4121748793<br>
+                        074-4121748792<br>
+                        Layover: 2hr 45min
+                    </div>
+                </div>
+
+                <div class="event flight-info">
+                    <div class="event-time">2:15 PM</div>
+                    <div class="event-details">
+                        <strong>Amsterdam → Tokyo (Narita)</strong><br>
+                        KL861<br>
+                        Seats: 43C, 43A | Duration: 13hr 30min
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 3: Tokyo Arrival & Cruise Embark -->
+        <div class="day-content day-hidden" data-day="3">
+            <div class="card">
+                <div class="date-header">Sunday, July 13, 2025</div>
+                <div class="location">🗾 Tokyo → Yokohama</div>
+                
+                <div class="event">
+                    <div class="event-time">10:45 AM</div>
+                    <div class="event-details">
+                        <strong>Tokyo Arrival</strong><br>
+                        Narita Airport
+                    </div>
+                </div>
+
+                <div class="event">
+                    <div class="event-time">~2 hours</div>
+                    <div class="event-details">
+                        <strong>Transfer to Pier</strong><br>
+                        Tokyo to Yokohama
+                    </div>
+                </div>
+
+                <div class="event cruise-info">
+                    <div class="event-time">Afternoon</div>
+                    <div class="event-details">
+                        <strong>Cruise Embarkation</strong><br>
+                        Celebrity Millennium, Yokohama
+                    </div>
+                </div>
+
+                <div class="event cruise-info">
+                    <div class="event-time">5:00 PM</div>
+                    <div class="event-details">
+                        <strong>Depart Yokohama</strong><br>
+                        🚢 Day 1 of cruise begins!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 4: Mt. Fuji -->
+        <div class="day-content day-hidden" data-day="4">
+            <div class="card">
+                <div class="date-header">Monday, July 14, 2025</div>
+                <div class="location">🗻 Mt. Fuji (Shimizu)</div>
+                
+                <div class="event cruise-info">
+                    <div class="event-time">7:45 AM - 7:00 PM</div>
+                    <div class="event-details">
+                        <strong>Port Day - Shimizu</strong><br>
+                        <br>
+                        🚢 Cruise Day 2
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 5: At Sea -->
+        <div class="day-content day-hidden" data-day="5">
+            <div class="card">
+                <div class="date-header">Tuesday, July 15, 2025</div>
+                <div class="location">🌊 At Sea</div>
+                
+                <div class="event cruise-info">
+                    <div class="event-time">All Day</div>
+                    <div class="event-details">
+                        <strong>Sea Day</strong><br>
+                        <br>
+                        🚢 Cruise Day 3
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 6: Kyoto -->
+        <div class="day-content day-hidden" data-day="6">
+            <div class="card">
+                <div class="date-header">Wednesday, July 16, 2025</div>
+                <div class="location">⛩️ Kyoto (Osaka)</div>
+                
+                <div class="event cruise-info">
+                    <div class="event-time">8:00 AM</div>
+                    <div class="event-details">
+                        <strong>Port Day - Osaka</strong><br>
+                        <br>
+                        🚢 Cruise Day 4
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 7: Kyoto & Kobe -->
+        <div class="day-content day-hidden" data-day="7">
+            <div class="card">
+                <div class="date-header">Thursday, July 17, 2025</div>
+                <div class="location">🥩 Kyoto → Kobe</div>
+                
+                <div class="event cruise-info">
+                    <div class="event-time">5:00 AM</div>
+                    <div class="event-details">
+                        <strong>Early Departure Kyoto</strong>
+                    </div>
+                </div>
+
+                <div class="event cruise-info">
+                    <div class="event-time">8:00 AM - 6:00 PM</div>
+                    <div class="event-details">
+                        <strong>Port Day - Kobe</strong><br>
+                        Beef!<br>
+                        🚢 Cruise Day 5
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 8: Kochi -->
+        <div class="day-content day-hidden" data-day="8">
+            <div class="card">
+                <div class="date-header">Friday, July 18, 2025</div>
+                <div class="location">🏯 Kochi</div>
+                
+                <div class="event cruise-info">
+                    <div class="event-time">8:00 AM - 6:00 PM</div>
+                    <div class="event-details">
+                        <strong>Port Day - Kochi</strong><br>
+                        <br>
+                        🚢 Cruise Day 6
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 9: Hiroshima -->
+        <div class="day-content day-hidden" data-day="9">
+            <div class="card">
+                <div class="date-header">Saturday, July 19, 2025</div>
+                <div class="location">🕊️ Hiroshima</div>
+                
+                <div class="event cruise-info">
+                    <div class="event-time">10:00 AM - 7:00 PM</div>
+                    <div class="event-details">
+                        <strong>Port Day - Hiroshima</strong><br>
+                        🚢 Cruise Day 7
+                    </div>
+                </div>
+
+                <div class="event special-note">
+                    <div class="event-time">11:45 AM - 4 hours</div>
+                    <div class="event-details">
+                        <strong>Peace Memorial Park & Museum</strong><br>
+                        Our Special tour!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 10: At Sea -->
+        <div class="day-content day-hidden" data-day="10">
+            <div class="card">
+                <div class="date-header">Sunday, July 20, 2025</div>
+                <div class="location">🌊 At Sea</div>
+                
+                <div class="event cruise-info">
+                    <div class="event-time">All Day</div>
+                    <div class="event-details">
+                        <strong>Sea Day</strong><br>
+                        🚢 Cruise Day 8
+                    </div>
+                </div>
+
+                <div class="event special-note">
+                    <div class="event-time">2:30 PM - 2 hours</div>
+                    <div class="event-details">
+                        <strong>High Tea at Sea</strong><br>
+                        Elegant afternoon experience for Ladybird and Bigbird
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 11: Nagasaki -->
+        <div class="day-content day-hidden" data-day="11">
+            <div class="card">
+                <div class="date-header">Monday, July 21, 2025</div>
+                <div class="location">🏮 Nagasaki</div>
+                
+                <div class="event cruise-info">
+                    <div class="event-time">7:00 AM - 5:00 PM</div>
+                    <div class="event-details">
+                        <strong>Port Day - Nagasaki</strong><br>
+                        🚢 Cruise Day 9
+                    </div>
+                </div>
+
+                <div class="event special-note">
+                    <div class="event-time">8:45 AM - 2hr 15min</div>
+                    <div class="event-details">
+                        <strong>Panoramic Nagasaki Tour</strong><br>
+                        Another Special tour!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 12: Jeju Island -->
+        <div class="day-content day-hidden" data-day="12">
+            <div class="card">
+                <div class="date-header">Tuesday, July 22, 2025</div>
+                <div class="location">🌺 Jeju Island, South Korea</div>
+                
+                <div class="event cruise-info">
+                    <div class="event-time">7:00 AM - 4:00 PM</div>
+                    <div class="event-details">
+                        <strong>Port Day - Jeju Island</strong><br>
+                        <br>
+                        🚢 Cruise Day 10
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 13: Kagoshima -->
+        <div class="day-content day-hidden" data-day="13">
+            <div class="card">
+                <div class="date-header">Wednesday, July 23, 2025</div>
+                <div class="location">🌋 Kagoshima</div>
+                
+                <div class="event cruise-info">
+                    <div class="event-time">10:00 AM - 6:00 PM</div>
+                    <div class="event-details">
+                        <strong>Port Day - Kagoshima</strong><br>
+                        <br>
+                        🚢 Cruise Day 11
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 14: At Sea -->
+        <div class="day-content day-hidden" data-day="14">
+            <div class="card">
+                <div class="date-header">Thursday, July 24, 2025</div>
+                <div class="location">🌊 At Sea</div>
+                
+                <div class="event cruise-info">
+                    <div class="event-time">All Day</div>
+                    <div class="event-details">
+                        <strong>Final Sea Day</strong><br>
+                        Last day to enjoy ship!<br>
+                        🚢 Cruise Day 12
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 15: Disembark & Return Flight -->
+        <div class="day-content day-hidden" data-day="15">
+            <div class="card">
+                <div class="date-header">Friday, July 25, 2025</div>
+                <div class="location">🛫 Yokohama → Dubai</div>
+                
+                <div class="event cruise-info">
+                    <div class="event-time">6:30 AM</div>
+                    <div class="event-details">
+                        <strong>Cruise Disembarkation</strong><br>
+                        Arrive Yokohama<br>
+                        🚢 Cruise Day 13 - Final day!
+                    </div>
+                </div>
+
+                <div class="event">
+                    <div class="event-time">Morning</div>
+                    <div class="event-details">
+                        <strong>Transfer to Airport</strong><br>
+                        Yokohama to Tokyo Narita
+                    </div>
+                </div>
+
+                <div class="event flight-info">
+                    <div class="event-time">10:30 PM</div>
+                    <div class="event-details">
+                        <strong>Tokyo → Dubai</strong><br>
+                        EK0319 | Terminal 2<br>
+                        Duration: 10hr 40min
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 16: Return Home -->
+        <div class="day-content day-hidden" data-day="16">
+            <div class="card">
+                <div class="date-header">Saturday, July 26, 2025</div>
+                <div class="location">🏠 Journey Home</div>
+                
+                <div class="event">
+                    <div class="event-time">4:10 AM</div>
+                    <div class="event-details">
+                        <strong>Dubai Arrival</strong><br>
+                        Terminal 3<br>
+                        Stopover: 3hr 10min
+                    </div>
+                </div>
+
+                <div class="event flight-info">
+                    <div class="event-time">7:20 AM</div>
+                    <div class="event-details">
+                        <strong>Dubai → Dublin</strong><br>
+                        EK0161 | Terminal 3<br>
+                        Duration: 7hr 55min
+                    </div>
+                </div>
+
+                <div class="event">
+                    <div class="event-time">12:15 PM</div>
+                    <div class="event-details">
+                        <strong>Dublin Arrival</strong><br>
+                        Terminal 2
+                    </div>
+                </div>
+
+                <div class="event">
+                    <div class="event-time">2:45 PM</div>
+                    <div class="event-details">
+                        <strong>Bus to Galway</strong><br>
+                        Arrive 5:15 PM (2hr 30min journey)<br>
+                        🏠 Welcome home!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="changeDay(-1)">← Previous</button>
+            <button class="nav-btn back-to-index" onclick="showIndex()">📅 All Days</button>
+            <button class="nav-btn" id="nextBtn" onclick="changeDay(1)">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentDay = 1;
+        let currentView = 'day'; // 'day' or 'index'
+        const totalDays = 16;
+        
+        const dayTitles = [
+            "July 11, 2025", // Day 1
+            "July 12, 2025", // Day 2
+            "Cruise Day 1 - July 13, 2025", // Day 3
+            "Cruise Day 2 - July 14, 2025", // Day 4
+            "Cruise Day 3 - July 15, 2025", // Day 5
+            "Cruise Day 4 - July 16, 2025", // Day 6
+            "Cruise Day 5 - July 17, 2025", // Day 7
+            "Cruise Day 6 - July 18, 2025", // Day 8
+            "Cruise Day 7 - July 19, 2025", // Day 9
+            "Cruise Day 8 - July 20, 2025", // Day 10
+            "Cruise Day 9 - July 21, 2025", // Day 11
+            "Cruise Day 10 - July 22, 2025", // Day 12
+            "Cruise Day 11 - July 23, 2025", // Day 13
+            "Cruise Day 12 - July 24, 2025", // Day 14
+            "Cruise Day 13 - July 25, 2025", // Day 15
+            "July 26, 2025" // Day 16
+        ];
+
+        function updateDisplay() {
+            if (currentView === 'index') {
+                showIndexView();
+            } else {
+                showDayView();
+            }
+        }
+
+        function showDayView() {
+            currentView = 'day';
+            
+            // Hide index view and show day content
+            document.getElementById('indexView').style.display = 'none';
+            document.querySelectorAll('.day-content').forEach(day => {
+                day.style.display = 'none';
+            });
+            
+            // Show current day
+            const currentDayElement = document.querySelector(`[data-day="${currentDay}"]`);
+            if (currentDayElement) {
+                currentDayElement.style.display = 'block';
+            }
+            
+            // Update day counter with proper title
+            document.getElementById('dayCounter').textContent = dayTitles[currentDay - 1];
+            document.getElementById('homeBtn').style.display = 'block';
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentDay === 1;
+            document.getElementById('nextBtn').disabled = currentDay === totalDays;
+            
+            // Show navigation
+            document.querySelector('.navigation').style.display = 'flex';
+        }
+
+        function showIndexView() {
+            currentView = 'index';
+            
+            // Hide all day content and show index
+            document.querySelectorAll('.day-content').forEach(day => {
+                day.style.display = 'none';
+            });
+            document.getElementById('indexView').style.display = 'block';
+            
+            // Update header for index view
+            document.getElementById('dayCounter').textContent = 'Complete Itinerary';
+            document.getElementById('homeBtn').style.display = 'none';
+            
+            // Hide navigation buttons
+            document.querySelector('.navigation').style.display = 'none';
+        }
+
+        function showIndex() {
+            showIndexView();
+        }
+
+        function goToDay(day) {
+            currentDay = day;
+            showDayView();
+        }
+
+        function changeDay(direction) {
+            const newDay = currentDay + direction;
+            if (newDay >= 1 && newDay <= totalDays) {
+                currentDay = newDay;
+                updateDisplay();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (currentView === 'day') {
+                if (e.key === 'ArrowLeft') changeDay(-1);
+                if (e.key === 'ArrowRight') changeDay(1);
+                if (e.key === 'Escape') showIndex();
+            }
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (currentView !== 'day') return;
+            
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    changeDay(1); // Swipe left = next day
+                } else {
+                    changeDay(-1); // Swipe right = previous day
+                }
+            }
+        }
+
+        // Initialize display - start with index view
+        showIndexView();
+    </script>
 </body>
 </html>
