@@ -1,21 +1,3 @@
-That's an excellent idea to make the tool even more useful\!
-
-Yes, it's possible to make the exchange rate update automatically. However, this changes the nature of the file slightly. To get a live rate, the page needs to use JavaScript to connect to the internet and fetch the data from a currency exchange API.
-
-This means:
-
-1.  **An internet connection will be required** when you first open the calculator each day for it to get the latest rate.
-2.  If you're offline, it will gracefully fall back to using the static rate we already have.
-
-I've updated the script below to do exactly this. It will:
-
-  * Attempt to fetch the latest EUR to JPY exchange rate from a free, public API.
-  * To avoid making too many requests, it will **cache the rate for 24 hours** in your browser's local storage. It will only fetch a new rate if the stored one is more than a day old or doesn't exist.
-  * If the fetch fails for any reason (like no internet), it will use the reliable backup rate.
-
-Here is the complete updated code. You can replace your entire HTML file with this.
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -305,7 +287,7 @@ Here is the complete updated code. You can replace your entire HTML file with th
 <body>
     <div class="container">
         <div class="header">
-            <h1>🐞 The Japan Plan 🦆</h1>
+            <h1>🐞 The Japan Plan v2 🦆</h1>
             <div class="day-counter" id="dayCounter">July 11, 2025</div>
             <div class="header-buttons">
                 <button class="home-btn" id="homeBtn" onclick="showIndex()">📅 All Days</button>
