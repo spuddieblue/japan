@@ -3,579 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Japan Cruise Itinerary</title>
+    <title>Japan Plan - Home</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Shared CSS for all pages */
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --text-dark: #2c3e50;
+            --text-light: #555;
+            --card-bg: rgba(255,255,255,0.95);
         }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             min-height: 100vh;
-            color: #333;
+            color: var(--text-dark);
         }
-
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: white;
-        }
-
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .header-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .day-counter {
-            background: rgba(255,255,255,0.2);
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
-            margin-bottom: 15px;
-        }
-
+        .container { max-width: 420px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 20px; color: white; }
+        .header h1 { font-size: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
         .card {
-            background: rgba(255,255,255,0.95);
+            background: var(--card-bg);
             border-radius: 20px;
-            padding: 25px;
+            padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            backdrop-filter: blur(10px);
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
         }
-
-        .date-header {
-            font-size: 18px;
-            font-weight: 700;
-            color: #667eea;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .location {
-            font-size: 20px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .event {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 12px;
-            border-left: 4px solid #667eea;
-        }
-
-        .event:last-child {
-            margin-bottom: 0;
-        }
-
-        .event-time {
-            font-weight: 600;
-            color: #667eea;
-            font-size: 16px;
-            margin-bottom: 7px;
-        }
-
-        .event-details {
-            color: #555;
-            line-height: 1.4;
-            font-size: 20px;
-        }
-
-        .special-note {
-            background: linear-gradient(45deg, #ffeaa7, #fab1a0);
-            border-left-color: #e17055;
-            font-weight: 500;
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .nav-btn {
-            flex: 1;
-            padding: 15px;
-            border: none;
+        /* Dashboard Specific Styles */
+        .countdown { text-align: center; padding: 15px; }
+        .countdown h2 { font-size: 16px; margin-bottom: 5px; color: var(--text-light); }
+        .countdown p { font-size: 28px; font-weight: 700; color: var(--primary-color); }
+        .info-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .info-card { padding: 20px; border-radius: 15px; }
+        .info-card.primary { background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); }
+        .info-card.secondary { background: rgba(255,255,255,0.5); }
+        .info-card h2 { font-size: 22px; margin-bottom: 15px; }
+        .info-card .date { font-size: 16px; font-weight: 600; }
+        .info-card .time { font-size: 36px; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px; }
+        .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 14px; text-align: center; }
+        .weather-grid h3 { font-size: 14px; margin-bottom: 5px; }
+        .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .nav-card {
+            background: var(--card-bg);
             border-radius: 15px;
+            padding: 20px;
+            text-align: center;
             font-size: 16px;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(255,255,255,0.9);
-            color: #667eea;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .nav-btn:active {
-            transform: translateY(0);
-        }
-
-        .view-hidden {
-            display: none;
-        }
-
-        .home-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.3);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            font-size: 14px;
-        }
-
-        .home-btn:hover {
-            background: rgba(255,255,255,0.4);
-            transform: translateY(-2px);
-        }
-
-        .index-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .day-card {
-            background: rgba(255,255,255,0.9);
-            border-radius: 15px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .day-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            background: rgba(255,255,255,0.95);
-        }
-
-        .day-card-number {
-            font-size: 18px;
-            font-weight: 700;
-            color: #667eea;
-            margin-bottom: 8px;
-        }
-
-        .day-card-date {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 8px;
-        }
-
-        .day-card-location {
-            font-size: 14px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .back-to-index:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .flight-info {
-            background: linear-gradient(45deg, #74b9ff, #0984e3);
-            color: white;
-            border-left: none;
-        }
-
-        .cruise-info {
-            background: linear-gradient(45deg, #00b894, #55a3ff);
-            color: white;
-            border-left: none;
-        }
-
-        .hotel-info {
-            background: linear-gradient(45deg, #fdcb6e, #e17055);
-            color: white;
-            border-left: none;
-        }
-        
-        .flight-info .event-time,
-        .cruise-info .event-time,
-        .hotel-info .event-time {
-            color: white;
-        }
-        
-        .calculator-input-group {
-            margin-bottom: 20px;
-        }
-
-        .calculator-input-group label {
-            display: block;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 8px;
-        }
-
-        .calculator-input-group input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-            font-size: 18px;
-            text-align: right;
-        }
-        
-        .rate-note {
-            font-size: 12px;
-            text-align: center;
-            color: #666;
-            margin-top: 15px;
-        }
-
-        /* Home Menu Styles */
-        .home-menu-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-
-        .home-menu-item {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .clickable {
-             cursor: pointer;
-        }
-        
-        .clickable:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .home-menu-item h2 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin: 0;
-        }
-        
-        .countdown-timer {
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .weather-info, .time-info {
-            font-size: 14px;
-            color: #555;
-        }
-        
-        /* Make weather items a link */
-        a.weather-link, a.weather-link:visited {
+            color: var(--text-dark);
             text-decoration: none;
-            color: inherit;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
         }
-
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .card {
-                padding: 20px;
-            }
-        }
+        .nav-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🐞 The Japan Plan v3.1 🦆</h1>
-            <div class="day-counter" id="dayCounter">Home Menu</div>
-            <div class="header-buttons">
-                 <button class="home-btn" onclick="showHomeMenu()">🏠 Home</button>
-            </div>
+        <div class="header"><h1>🐞 The Japan Plan v2 🦆</h1></div>
+
+        <div class="card countdown" id="countdown-card">
+            <h2>Days Until Departure</h2>
+            <p id="countdown-days">...</p>
         </div>
 
-        <div id="homeView" class="view-hidden">
-            <div class="card">
-                 <div id="countdown" class="home-menu-item"></div>
-                <div class="home-menu-grid">
-                    <div class="home-menu-item clickable" onclick="showIndex()">
-                        <h2>📅 All Days</h2>
+        <div class="info-grid">
+            <div class="info-card primary">
+                <h2>Tokyo, Japan</h2>
+                <p class="date" id="tokyo-date">Loading...</p>
+                <p class="time" id="tokyo-time">Loading...</p>
+                <div class="weather-grid">
+                    <div>
+                        <h3>Today</h3>
+                        <p id="tokyo-today-weather">...</p>
                     </div>
-                    <div class="home-menu-item clickable" onclick="showCalculator()">
-                        <h2>¥€ Currency Calculator</h2>
+                    <div>
+                        <h3>Tomorrow</h3>
+                        <p id="tokyo-tomorrow-weather">...</p>
                     </div>
-                    <a href="https://www.google.com/search?q=weather+galway" target="_blank" class="weather-link">
-                        <div class="home-menu-item clickable">
-                            <h2>Today's Weather in Galway</h2>
-                            <p id="todayWeather" class="weather-info">Loading...</p>
-                        </div>
-                    </a>
-                    <a href="https://www.google.com/search?q=weather+galway" target="_blank" class="weather-link">
-                        <div class="home-menu-item clickable">
-                           <h2>Tomorrow's Weather in Galway</h2>
-                           <p id="tomorrowWeather" class="weather-info">Loading...</p>
-                        </div>
-                    </a>
-                    <div class="home-menu-item">
-                        <h2>Current Time in Tokyo</h2>
-                        <p id="tokyoTime" class="time-info">Loading...</p>
+                </div>
+            </div>
+
+            <div class="info-card secondary">
+                <h2>Galway, Ireland</h2>
+                <p class="date" id="galway-date">Loading...</p>
+                <p class="time" id="galway-time">Loading...</p>
+                <div class="weather-grid">
+                    <div>
+                        <h3>Today</h3>
+                        <p id="galway-today-weather">...</p>
                     </div>
-                    <div class="home-menu-item">
-                        <h2>Current Time in Galway</h2>
-                        <p id="galwayTime" class="time-info">Loading...</p>
-                    </div>
-                    <div class="home-menu-item clickable" onclick="showPhrases()">
-                        <h2>🗣️ Useful Japanese Phrases</h2>
-                    </div>
-                    <div class="home-menu-item clickable" onclick="showGifts()">
-                        <h2>🎁 Gift Reminders</h2>
+                    <div>
+                        <h3>Tomorrow</h3>
+                        <p id="galway-tomorrow-weather">...</p>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div id="indexView" class="view-hidden">
-            <div class="card">
-                <div class="date-header">🐞 Complete Itinerary</div>
-                <div class="index-grid">
-                      </div>
-            </div>
-        </div>
 
-        <div data-day="1" class="view-hidden day-content">
-             </div>
-        <div id="calculatorView" class="view-hidden">
-             <div class="card">
-                <div class="date-header">Currency Converter</div>
-                <div class="calculator-input-group">
-                    <label for="euroInput">🇪🇺 Euro (€)</label>
-                    <input type="number" id="euroInput" placeholder="0.00" oninput="convertCurrency('eur')">
-                </div>
-                <div class="calculator-input-group">
-                    <label for="yenInput">🇯🇵 Japanese Yen (¥)</label>
-                    <input type="number" id="yenInput" placeholder="0" oninput="convertCurrency('jpy')">
-                </div>
-                <button class="nav-btn" onclick="showHomeMenu()">Back to Home</button>
-                <p class="rate-note" id="rateNote">Fetching latest rate...</p>
+        <div class="card">
+            <div class="nav-grid">
+                <a href="itinerary.html" class="nav-card">📅 Itinerary</a>
+                <a href="calculator.html" class="nav-card">💴 Calculator</a>
+                <a href="phrases.html" class="nav-card">🗣️ Phrases</a>
+                <a href="gifts.html" class="nav-card">🎁 Gifts</a>
             </div>
-        </div>
-
-        <div id="phrasesView" class="view-hidden">
-            <div class="card">
-                <div class="date-header">Useful Japanese Phrases</div>
-                <div class="event">
-                    <div class="event-time">Konnichiwa (こんにちは)</div>
-                    <div class="event-details">Hello</div>
-                </div>
-                <button class="nav-btn" onclick="showHomeMenu()">Back to Home</button>
-            </div>
-        </div>
-
-        <div id="giftsView" class="view-hidden">
-             <div class="card">
-                <div class="date-header">Gift Reminders</div>
-                 <button class="nav-btn" onclick="showHomeMenu()">Back to Home</button>
-            </div>
-        </div>
-
-        <div class="navigation view-hidden">
-            <button class="nav-btn" id="prevBtn" onclick="changeDay(-1)">← Previous</button>
-            <button class="nav-btn" onclick="showIndex()">📅 All Days</button>
-            <button class="nav-btn" id="nextBtn" onclick="changeDay(1)">Next →</button>
         </div>
     </div>
 
     <script>
-        // --- Global State ---
-        let currentDay = 1;
-        const totalDays = 16;
-        let exchangeRate = 171.5;
-        const FALLBACK_RATE = 171.5;
-
-        // --- DOM Elements ---
-        const dayCounter = document.getElementById('dayCounter');
-        const allViews = document.querySelectorAll('.view-hidden');
-        const homeView = document.getElementById('homeView');
-        const indexView = document.getElementById('indexView');
-        const calculatorView = document.getElementById('calculatorView');
-        const phrasesView = document.getElementById('phrasesView');
-        const giftsView = document.getElementById('giftsView');
-        const navigation = document.querySelector('.navigation');
-        const yenInput = document.getElementById('yenInput');
-        const euroInput = document.getElementById('euroInput');
-        const rateNote = document.getElementById('rateNote');
-
-        // --- View Management ---
-        function hideAllWindows() {
-            allViews.forEach(view => view.style.display = 'none');
-            navigation.style.display = 'none';
-        }
-
-        function showView(viewElement, title) {
-            hideAllWindows();
-            viewElement.style.display = 'block';
-            dayCounter.textContent = title;
-        }
-
-        function showHomeMenu() {
-            showView(homeView, 'Home Menu');
-        }
-
-        function showIndex() {
-            showView(indexView, 'Complete Itinerary');
-        }
-
-        function showCalculator() {
-            showView(calculatorView, 'Currency Converter');
-        }
-
-        function showPhrases() {
-            showView(phrasesView, 'Useful Japanese Phrases');
-        }
-
-        function showGifts() {
-            showView(giftsView, 'Gift Reminders');
-        }
-
-        function goToDay(day) {
-            currentDay = day;
-            hideAllWindows();
-            const currentDayElement = document.querySelector(`.day-content[data-day="${currentDay}"]`);
-            if (currentDayElement) {
-                currentDayElement.style.display = 'block';
-                dayCounter.textContent = dayTitles[currentDay - 1]; // Assuming dayTitles is defined
-                navigation.style.display = 'flex';
-                updateNavButtons();
-            }
-        }
-        
-        function changeDay(direction) {
-            const newDay = currentDay + direction;
-            if (newDay >= 1 && newDay <= totalDays) {
-                goToDay(newDay);
-            }
-        }
-        
-        function updateNavButtons() {
-            document.getElementById('prevBtn').disabled = currentDay === 1;
-            document.getElementById('nextBtn').disabled = currentDay === totalDays;
-        }
-
-        // --- Countdown Timer ---
-        function updateCountdown() {
-            const countdownElement = document.getElementById('countdown');
-            const departureDate = new Date('2025-07-11T00:00:00Z'); // Use ISO format for consistency
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- MASTER FUNCTION TO UPDATE ALL DYNAMIC CONTENT ---
+        function updateAllInfo() {
             const now = new Date();
             
-            // Set both times to midnight to count full days
-            departureDate.setHours(0,0,0,0);
-            now.setHours(0,0,0,0);
+            // --- TIME & DATE ---
+            const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+
+            document.getElementById('tokyo-date').textContent = now.toLocaleDateString('en-US', { ...optionsDate, timeZone: 'Asia/Tokyo' });
+            document.getElementById('tokyo-time').textContent = now.toLocaleTimeString('en-US', { ...optionsTime, timeZone: 'Asia/Tokyo' });
             
+            document.getElementById('galway-date').textContent = now.toLocaleDateString('en-US', { ...optionsDate, timeZone: 'Europe/Dublin' });
+            document.getElementById('galway-time').textContent = now.toLocaleTimeString('en-US', { ...optionsTime, timeZone: 'Europe/Dublin' });
+        }
+
+        // --- COUNTDOWN ---
+        function updateCountdown() {
+            const countdownEl = document.getElementById('countdown-days');
+            const countdownCard = document.getElementById('countdown-card');
+            const departureDate = new Date('2025-07-11T00:00:00Z');
+            const now = new Date();
             const diff = departureDate - now;
 
-            if (diff >= 0) {
+            if (diff > 0) {
                 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                countdownElement.innerHTML = `<h2>Days Until Departure</h2><p class="countdown-timer">${days}</p>`;
+                countdownEl.textContent = `${days} days`;
             } else {
-                countdownElement.style.display = 'none';
+                countdownCard.style.display = 'none';
             }
         }
 
-        // --- Weather ---
-        async function fetchWeather() {
-            const todayWeather = document.getElementById('todayWeather');
-            const tomorrowWeather = document.getElementById('tomorrowWeather');
-            // Using open-meteo API for simplicity
-            const url = 'https://api.open-meteo.com/v1/forecast?latitude=53.27&longitude=-9.05&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto';
-
+        // --- WEATHER ---
+        async function fetchWeather(lat, lon, todayEl, tomorrowEl) {
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`;
             try {
                 const response = await fetch(url);
                 const data = await response.json();
-                todayWeather.textContent = `Max: ${data.daily.temperature_2m_max[0]}°C, Min: ${data.daily.temperature_2m_min[0]}°C`;
-                tomorrowWeather.textContent = `Max: ${data.daily.temperature_2m_max[1]}°C, Min: ${data.daily.temperature_2m_min[1]}°C`;
+                document.getElementById(todayEl).innerHTML = `Max: ${data.daily.temperature_2m_max[0]}°C<br>Min: ${data.daily.temperature_2m_min[0]}°C`;
+                document.getElementById(tomorrowEl).innerHTML = `Max: ${data.daily.temperature_2m_max[1]}°C<br>Min: ${data.daily.temperature_2m_min[1]}°C`;
             } catch (error) {
-                const errorMessage = 'Could not fetch weather.';
-                todayWeather.textContent = errorMessage;
-                tomorrowWeather.textContent = errorMessage;
+                document.getElementById(todayEl).textContent = 'N/A';
+                document.getElementById(tomorrowEl).textContent = 'N/A';
             }
         }
 
-        // --- Clocks ---
-        function updateClocks() {
-            const tokyoTimeEl = document.getElementById('tokyoTime');
-            const galwayTimeEl = document.getElementById('galwayTime');
-            
-            const now = new Date();
-            tokyoTimeEl.textContent = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Tokyo' });
-            galwayTimeEl.textContent = now.toLocaleTimeString('en-GB', { timeZone: 'Europe/Dublin' });
-        }
-
-        // --- Currency Conversion ---
-        async function fetchExchangeRate() {
-           // Your existing fetchExchangeRate function
-        }
-        
-        function convertCurrency(source) {
-            // Your existing convertCurrency function
-        }
-        
-        // --- Initialization ---
-        document.addEventListener('DOMContentLoaded', () => {
-            showHomeMenu();
-            updateCountdown();
-            fetchWeather();
-            updateClocks(); // Initial call
-            setInterval(updateClocks, 1000); // Update every second
-            fetchExchangeRate();
-            // You will need to re-populate your itinerary content and dayTitles array here
-        });
-        
+        // --- INITIALIZE & SET INTERVALS ---
+        updateAllInfo(); // Run once immediately
+        updateCountdown();
+        fetchWeather(35.68, 139.69, 'tokyo-today-weather', 'tokyo-tomorrow-weather'); // Tokyo
+        fetchWeather(53.27, -9.05, 'galway-today-weather', 'galway-tomorrow-weather'); // Galway
+        setInterval(updateAllInfo, 1000); // Update clocks every second
+    });
     </script>
 </body>
 </html>
