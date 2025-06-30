@@ -321,16 +321,25 @@
         }
 
         .weather-label {
-            font-size: 12px;
-            opacity: 0.7;
-            margin-bottom: 4px;
+            font-size: 16px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .weather-value {
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .weather-icon {
+            font-size: 28px;
         }
 
         /* Loading animation */
@@ -401,7 +410,6 @@
             <img src="images/japan_plan.png" width="90%" alt="Japan Plan">
         </header>
 
-
         <nav class="nav-container">
             <div class="nav-tabs">
                 <a href="index.html" class="nav-tab active">Home.</a>
@@ -415,7 +423,7 @@
         <main class="main-content">
             <div class="card countdown-card animate-in" id="countdown-card">
                 <h2>Days Until Departure</h2>
-                <div class="countdown-number" id="countdown-days">11</div>
+                <div class="countdown-number" id="countdown-days">Loading...</div>
                 <div class="countdown-label">days to go</div>
             </div>
 
@@ -429,8 +437,8 @@
                             </div>
                         </div>
                         <div class="time-info">
-                            <div class="time-display pulse" id="tokyo-time">11:31:56</div>
-                            <div class="date-display" id="tokyo-date">Tuesday, July 1, 2025</div>
+                            <div class="time-display pulse" id="tokyo-time">Loading...</div>
+                            <div class="date-display" id="tokyo-date">Loading date...</div>
                         </div>
                     </div>
                     <div class="weather-info">
@@ -458,8 +466,8 @@
                             </div>
                         </div>
                         <div class="time-info">
-                            <div class="time-display pulse" id="galway-time">15:31:56</div>
-                            <div class="date-display" id="galway-date">Tuesday, July 1, 2025</div>
+                            <div class="time-display pulse" id="galway-time">Loading...</div>
+                            <div class="date-display" id="galway-date">Loading date...</div>
                         </div>
                     </div>
                     <div class="weather-info">
@@ -503,12 +511,18 @@
                 const countdownEl = document.getElementById('countdown-days');
                 const countdownCard = document.getElementById('countdown-card');
                 const today = new Date();
-                const departureDate = new Date("2025-07-11");
-                const diff = Math.ceil((departureDate - today) / (1000 * 60 * 60 * 24));
+                today.setHours(0, 0, 0, 0); // Set to start of day for accurate calculation
                 
-                if (diff > 0) {
-                    countdownEl.textContent = diff;
-                } else if (diff === 0) {
+                const departureDate = new Date("2025-07-11");
+                departureDate.setHours(0, 0, 0, 0); // Set to start of day
+                
+                const diffTime = departureDate - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                if (diffDays > 0) {
+                    countdownEl.textContent = diffDays;
+                    countdownCard.querySelector('.countdown-label').textContent = diffDays === 1 ? "day to go" : "days to go";
+                } else if (diffDays === 0) {
                     countdownEl.textContent = "TODAY!";
                     countdownCard.querySelector('.countdown-label').textContent = "Departure day!";
                 } else {
@@ -517,12 +531,12 @@
             }
 
             async function fetchWeather() {
-                // Simulate loading delay
+                // Simulate loading delay with more realistic weather data
                 setTimeout(() => {
-                    document.getElementById('tokyo-today-weather').innerHTML = '☀️ 28°C';
-                    document.getElementById('tokyo-tomorrow-weather').innerHTML = '🌤️ 26°C';
-                    document.getElementById('galway-today-weather').innerHTML = '🌧️ 18°C';
-                    document.getElementById('galway-tomorrow-weather').innerHTML = '⛅ 20°C';
+                    document.getElementById('tokyo-today-weather').innerHTML = '<span class="weather-icon">☀️</span> 28°C';
+                    document.getElementById('tokyo-tomorrow-weather').innerHTML = '<span class="weather-icon">🌤️</span> 26°C';
+                    document.getElementById('galway-today-weather').innerHTML = '<span class="weather-icon">🌧️</span> 18°C';
+                    document.getElementById('galway-tomorrow-weather').innerHTML = '<span class="weather-icon">⛅</span> 20°C';
                 }, 1500);
             }
 
@@ -534,7 +548,7 @@
             // Update every second
             setInterval(updateAllInfo, 1000);
             
-            // Update countdown every minute
+            // Update countdown every minute (more efficient than every second)
             setInterval(updateCountdown, 60000);
         });
     </script>
