@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Japan Plan - Home</title>
     <style>
         :root {
@@ -245,11 +248,17 @@
             background: var(--gradient-4);
         }
 
-        .time-card-header {
+        .time-card-content {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 16px;
+        }
+
+        .city-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .city-name {
@@ -258,25 +267,33 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            margin-bottom: 4px;
         }
 
         .city-flag {
             font-size: 24px;
         }
 
+        .time-info {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
         .time-display {
-            font-size: clamp(28px, 8vw, 36px);
+            font-size: clamp(24px, 7vw, 32px);
             font-weight: 800;
             line-height: 1;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             font-variant-numeric: tabular-nums;
         }
 
         .date-display {
-            font-size: 14px;
+            font-size: 13px;
             opacity: 0.8;
             font-weight: 500;
-            margin-bottom: 16px;
+            white-space: nowrap;
         }
 
         .weather-info {
@@ -393,14 +410,18 @@
 
             <div class="time-grid">
                 <div class="card time-card tokyo-card animate-in">
-                    <div class="time-card-header">
-                        <div class="city-name">
-                            <span class="city-flag">🗼</span>
-                            Tokyo
+                    <div class="time-card-content">
+                        <div class="city-info">
+                            <div class="city-name">
+                                <span class="city-flag">🗼</span>
+                                Tokyo
+                            </div>
+                        </div>
+                        <div class="time-info">
+                            <div class="time-display pulse" id="tokyo-time">11:31:56</div>
+                            <div class="date-display" id="tokyo-date">Tuesday, July 1, 2025</div>
                         </div>
                     </div>
-                    <div class="time-display pulse" id="tokyo-time">11:31:56</div>
-                    <div class="date-display" id="tokyo-date">Tuesday, July 1, 2025</div>
                     <div class="weather-info">
                         <div class="weather-item">
                             <div class="weather-label">Today</div>
@@ -418,14 +439,18 @@
                 </div>
 
                 <div class="card time-card galway-card animate-in">
-                    <div class="time-card-header">
-                        <div class="city-name">
-                            <span class="city-flag">🍀</span>
-                            Galway
+                    <div class="time-card-content">
+                        <div class="city-info">
+                            <div class="city-name">
+                                <span class="city-flag">🍀</span>
+                                Galway
+                            </div>
+                        </div>
+                        <div class="time-info">
+                            <div class="time-display pulse" id="galway-time">15:31:56</div>
+                            <div class="date-display" id="galway-date">Tuesday, July 1, 2025</div>
                         </div>
                     </div>
-                    <div class="time-display pulse" id="galway-time">15:31:56</div>
-                    <div class="date-display" id="galway-date">Tuesday, July 1, 2025</div>
                     <div class="weather-info">
                         <div class="weather-item">
                             <div class="weather-label">Today</div>
