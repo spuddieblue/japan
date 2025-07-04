@@ -683,8 +683,6 @@
                             });
                             
                             const dataType = weather.current.isDemo ? 'Demo data' : '';
-                            document.getElementById(`${city}-update-time`).textContent = 
-                                `Last updated: ${updateTime} (${dataType})`;
                         } else {
                             throw new Error('No weather data available');
                         }
