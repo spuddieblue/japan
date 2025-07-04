@@ -279,21 +279,20 @@
         }
 
         .day-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--surface);
             border-radius: 16px;
             padding: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
             box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .day-card:hover {
             transform: translateY(-3px);
             box-shadow: var(--shadow-xl);
-            background: rgba(255, 255, 255, 0.15);
+            background: var(--white);
         }
 
         .day-card-number {
@@ -305,14 +304,14 @@
 
         .day-card-date {
             font-size: 12px;
-            color: var(--gray-light);
+            color: var(--gray);
             margin-bottom: 8px;
         }
 
         .day-card-location {
             font-size: 14px;
             font-weight: 600;
-            color: var(--white);
+            color: var(--dark);
         }
 
         .back-to-index:hover {
@@ -405,86 +404,86 @@
             <div class="card">
                 <div class="date-header">🐞 Complete Itinerary</div>
                 <div class="index-grid">
-                     <div class="day-card" onclick="goToDay(1)">
-                        <div class="day-card-number">July 11</div>
-                        <div class="day-card-date">Friday</div>
-                        <div class="day-card-location">🏠 Departure</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(2)">
-                        <div class="day-card-number">July 12</div>
-                        <div class="day-card-date">Saturday</div>
-                        <div class="day-card-location">✈️ To Tokyo</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(3)">
-                        <div class="day-card-number">Cruise Day 1</div>
-                        <div class="day-card-date">July 13</div>
-                        <div class="day-card-location">🚢 Embark</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(4)">
-                        <div class="day-card-number">Cruise Day 2</div>
-                        <div class="day-card-date">July 14</div>
-                        <div class="day-card-location">🗻 Mt. Fuji</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(5)">
-                        <div class="day-card-number">Cruise Day 3</div>
-                        <div class="day-card-date">July 15</div>
-                        <div class="day-card-location">🌊 At Sea</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(6)">
-                        <div class="day-card-number">Cruise Day 4</div>
-                        <div class="day-card-date">July 16</div>
-                        <div class="day-card-location">⛩️ Kyoto</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(7)">
-                        <div class="day-card-number">Cruise Day 5</div>
-                        <div class="day-card-date">July 17</div>
-                        <div class="day-card-location">🥩 Kobe</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(8)">
-                        <div class="day-card-number">Cruise Day 6</div>
-                        <div class="day-card-date">July 18</div>
-                        <div class="day-card-location">🏯 Kochi</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(9)">
-                        <div class="day-card-number">Cruise Day 7</div>
-                        <div class="day-card-date">July 19</div>
-                        <div class="day-card-location">🕊️ Hiroshima</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(10)">
-                        <div class="day-card-number">Cruise Day 8</div>
-                        <div class="day-card-date">July 20</div>
-                        <div class="day-card-location">🌊 At Sea</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(11)">
-                        <div class="day-card-number">Cruise Day 9</div>
-                        <div class="day-card-date">July 21</div>
-                        <div class="day-card-location">🏮 Nagasaki</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(12)">
-                        <div class="day-card-number">Cruise Day 10</div>
-                        <div class="day-card-date">July 22</div>
-                        <div class="day-card-location">🌺 Jeju Island</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(13)">
-                        <div class="day-card-number">Cruise Day 11</div>
-                        <div class="day-card-date">July 23</div>
-                        <div class="day-card-location">🌋 Kagoshima</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(14)">
-                        <div class="day-card-number">Cruise Day 12</div>
-                        <div class="day-card-date">July 24</div>
-                        <div class="day-card-location">🌊 At Sea</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(15)">
-                        <div class="day-card-number">Cruise Day 13</div>
-                        <div class="day-card-date">July 25</div>
-                        <div class="day-card-location">🛫 Disembark</div>
-                    </div>
-                    <div class="day-card" onclick="goToDay(16)">
-                        <div class="day-card-number">July 26</div>
-                        <div class="day-card-date">Saturday</div>
-                        <div class="day-card-location">🏠 Home</div>
-                    </div>
+                       <div class="day-card" onclick="goToDay(1)">
+                            <div class="day-card-number">July 11</div>
+                            <div class="day-card-date">Friday</div>
+                            <div class="day-card-location">🏠 Departure</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(2)">
+                            <div class="day-card-number">July 12</div>
+                            <div class="day-card-date">Saturday</div>
+                            <div class="day-card-location">✈️ To Tokyo</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(3)">
+                            <div class="day-card-number">Cruise Day 1</div>
+                            <div class="day-card-date">July 13</div>
+                            <div class="day-card-location">🚢 Embark</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(4)">
+                            <div class="day-card-number">Cruise Day 2</div>
+                            <div class="day-card-date">July 14</div>
+                            <div class="day-card-location">🗻 Mt. Fuji</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(5)">
+                            <div class="day-card-number">Cruise Day 3</div>
+                            <div class="day-card-date">July 15</div>
+                            <div class="day-card-location">🌊 At Sea</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(6)">
+                            <div class="day-card-number">Cruise Day 4</div>
+                            <div class="day-card-date">July 16</div>
+                            <div class="day-card-location">⛩️ Kyoto</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(7)">
+                            <div class="day-card-number">Cruise Day 5</div>
+                            <div class="day-card-date">July 17</div>
+                            <div class="day-card-location">🥩 Kobe</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(8)">
+                            <div class="day-card-number">Cruise Day 6</div>
+                            <div class="day-card-date">July 18</div>
+                            <div class="day-card-location">🏯 Kochi</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(9)">
+                            <div class="day-card-number">Cruise Day 7</div>
+                            <div class="day-card-date">July 19</div>
+                            <div class="day-card-location">🕊️ Hiroshima</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(10)">
+                            <div class="day-card-number">Cruise Day 8</div>
+                            <div class="day-card-date">July 20</div>
+                            <div class="day-card-location">🌊 At Sea</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(11)">
+                            <div class="day-card-number">Cruise Day 9</div>
+                            <div class="day-card-date">July 21</div>
+                            <div class="day-card-location">🏮 Nagasaki</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(12)">
+                            <div class="day-card-number">Cruise Day 10</div>
+                            <div class="day-card-date">July 22</div>
+                            <div class="day-card-location">🌺 Jeju Island</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(13)">
+                            <div class="day-card-number">Cruise Day 11</div>
+                            <div class="day-card-date">July 23</div>
+                            <div class="day-card-location">🌋 Kagoshima</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(14)">
+                            <div class="day-card-number">Cruise Day 12</div>
+                            <div class="day-card-date">July 24</div>
+                            <div class="day-card-location">🌊 At Sea</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(15)">
+                            <div class="day-card-number">Cruise Day 13</div>
+                            <div class="day-card-date">July 25</div>
+                            <div class="day-card-location">🛫 Disembark</div>
+                        </div>
+                        <div class="day-card" onclick="goToDay(16)">
+                            <div class="day-card-number">July 26</div>
+                            <div class="day-card-date">Saturday</div>
+                            <div class="day-card-location">🏠 Home</div>
+                        </div>
                 </div>
             </div>
         </div>
