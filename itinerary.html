@@ -129,13 +129,13 @@
         }
 
         .card {
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(248, 250, 252, 0.85); /* Frosted Light Background */
             border-radius: 24px;
             padding: 25px;
             margin-bottom: 20px;
             box-shadow: var(--shadow-xl);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -150,33 +150,32 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(15, 23, 42, 0.1), transparent); /* Darker shine for light bg */
         }
 
         .date-header {
             font-size: 18px;
             font-weight: 700;
-            color: var(--white);
-            margin-bottom: 15px;
+            color: var(--primary-dark); /* Dark text */
+            margin-bottom: 5px;
             text-align: center;
-            opacity: 0.9;
         }
 
         .location {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--white);
-            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark-light); /* Dark text */
+            margin-bottom: 20px;
             text-align: center;
         }
 
         .event {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--white); /* Solid white for contrast */
             border-radius: 16px;
             padding: 15px;
             margin-bottom: 12px;
             border-left: 4px solid var(--primary);
-            backdrop-filter: blur(10px);
+            border: 1px solid #eef2ff; /* Subtle border */
         }
 
         .event:last-child {
@@ -191,26 +190,32 @@
         }
 
         .event-details {
-            color: var(--white);
-            line-height: 1.4;
-            font-size: 20px;
+            color: var(--gray); /* Dark gray for readability */
+            line-height: 1.5;
+            font-size: 16px;
         }
 
         .event-details strong {
-            color: var(--white);
+            color: var(--dark); /* Stronger dark for bolded text */
         }
 
         .special-note {
             background: var(--gradient-gold);
             border-left-color: #e17055;
             font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.3);
         }
-
+        
+        .special-note .event-details, .special-note .event-time {
+            color: var(--dark);
+        }
+        
         .navigation {
             display: flex;
             justify-content: space-between;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: auto; /* Push to bottom */
+            padding-top: 20px;
         }
 
         .nav-btn {
@@ -319,33 +324,33 @@
             box-shadow: var(--shadow-xl);
         }
 
-        .flight-info {
-            background: var(--gradient-3);
+        .flight-info, .cruise-info, .hotel-info {
             color: white;
-            border-left: none;
-        }
-
-        .cruise-info {
-            background: linear-gradient(45deg, #00b894, #55a3ff);
-            color: white;
-            border-left: none;
-        }
-
-        .hotel-info {
-            background: var(--gradient-gold);
-            color: white;
-            border-left: none;
+            border: none;
+            border: 1px solid rgba(255,255,255,0.3);
         }
         
-        .flight-info .event-time,
-        .cruise-info .event-time,
-        .hotel-info .event-time {
-            color: white;
-            opacity: 0.9;
+        .flight-info { background: var(--gradient-3); }
+        .cruise-info { background: linear-gradient(45deg, #00b894, #55a3ff); }
+        .hotel-info { background: var(--gradient-gold); }
+        
+        .flight-info .event-time, .cruise-info .event-time, .hotel-info .event-time,
+        .flight-info .event-details, .cruise-info .event-details, .hotel-info .event-details,
+        .flight-info .event-details strong, .cruise-info .event-details strong, .hotel-info .event-details strong {
+            color: var(--white);
+            opacity: 0.95;
         }
         
         .calculator-input-group {
             margin-bottom: 20px;
+        }
+
+        #calculatorView .card, #indexView .card {
+             background: rgba(15, 23, 42, 0.6);
+             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        #calculatorView .date-header, #indexView .date-header {
+            color: var(--white);
         }
 
         .calculator-input-group label {
@@ -491,7 +496,7 @@
         <div class="day-content" data-day="1">
             <div class="card">
                 <div class="date-header">Friday, July 11, 2025</div>
-                <div class="location">🏠 Departure Day</div>
+                <div class="location">Departure Day</div>
                 
                 <div class="event">
                     <div class="event-time">10:00 AM</div>
@@ -531,7 +536,7 @@
         <div class="day-content day-hidden" data-day="2">
             <div class="card">
                 <div class="date-header">Saturday, July 12, 2025</div>
-                <div class="location">✈️ Travel to Tokyo</div>
+                <div class="location">Travel to Tokyo</div>
                 
                 <div class="event flight-info">
                     <div class="event-time">8:55 AM</div>
@@ -565,7 +570,7 @@
         <div class="day-content day-hidden" data-day="3">
             <div class="card">
                 <div class="date-header">Sunday, July 13, 2025</div>
-                <div class="location">🗾 Tokyo → Yokohama</div>
+                <div class="location">Tokyo → Yokohama</div>
                 
                 <div class="event">
                     <div class="event-time">10:45 AM</div>
@@ -601,7 +606,7 @@
         <div class="day-content day-hidden" data-day="4">
             <div class="card">
                 <div class="date-header">Monday, July 14, 2025</div>
-                <div class="location">🗻 Mt. Fuji (Shimizu)</div>
+                <div class="location">Mt. Fuji (Shimizu)</div>
                 
                 <div class="event cruise-info">
                     <div class="event-time">7:45 AM - 7:00 PM</div>
@@ -617,7 +622,7 @@
         <div class="day-content day-hidden" data-day="5">
             <div class="card">
                 <div class="date-header">Tuesday, July 15, 2025</div>
-                <div class="location">🌊 At Sea</div>
+                <div class="location">At Sea</div>
                 
                 <div class="event cruise-info">
                     <div class="event-time">All Day</div>
@@ -633,11 +638,11 @@
         <div class="day-content day-hidden" data-day="6">
             <div class="card">
                 <div class="date-header">Wednesday, July 16, 2025</div>
-                <div class="location">⛩️ Kyoto (Osaka)</div>
+                <div class="location">Kyoto (Osaka)</div>
                 
                 <div class="event cruise-info">
                     <div class="event-time">From 8:00 AM</div>
-                    <div class="event-details" style="font-size: 16px; line-height: 1.5;">
+                    <div class="event-details" style="line-height: 1.5;">
                         <strong>Port Day - Osaka for Kyoto</strong><br>
                         🚢 Cruise Day 4<br><br>
 
@@ -645,7 +650,7 @@
                 </div>
                 <div class="event">
                     <div class="event-time"><a href="castle.html">Bullet Train to Nijō Castle</a></div>
-                    <div class="event-details" style="font-size: 16px; line-height: 1.5;">
+                    <div class="event-details" style="line-height: 1.5;">
                         <strong>🛳 From Osaka Cruise Port to Kyoto (Nijō Castle)</strong><br>
                         Walk to Osakakō Station (5 min from cruise port).<br>
                         Take Chūō Line to Honmachi, transfer to Midosuji Line → go to Shin-Osaka (total ~30–40 min).<br>
@@ -656,7 +661,7 @@
                 </div>
                 <div class="event">
                     <div class="event-time">Afternoon Journey</div>
-                    <div class="event-details" style="font-size: 16px; line-height: 1.5;">
+                    <div class="event-details" style="line-height: 1.5;">
                         <strong>🏯 From Nijō Castle to Sumo Hall (Osaka)</strong><br>
                         Walk to Nijō‑jō‑mae Station, take Tozai Line → Karasuma-Oike, transfer to Karasuma Line → Kyoto Station (~15 min).<br>
                         Take JR Special Rapid or Shinkansen to Shin-Osaka/Osaka Station (~15–30 min).<br>
@@ -668,7 +673,7 @@
 
                 <div class="event">
                     <div class="event-time">Evening Walk</div>
-                    <div class="event-details" style="font-size: 16px; line-height: 1.5;">
+                    <div class="event-details" style="line-height: 1.5;">
                         <strong>🚶 Walking to Dōtonbori (~1.5 km, ~20 min)</strong><br>
                         Exit EDION Arena Osaka and head east towards Shinsaibashi-suji.<br>
                         Continue along the shopping street to the Dōtonbori Canal, home to the iconic Glico running man sign.<br>
@@ -681,7 +686,7 @@
         <div class="day-content day-hidden" data-day="7">
             <div class="card">
                 <div class="date-header">Thursday, July 17, 2025</div>
-                <div class="location">🥩 Kyoto → Kobe</div>
+                <div class="location">Kobe</div>
                 
                 <div class="event cruise-info">
                     <div class="event-time">5:00 AM</div>
@@ -703,7 +708,7 @@
         <div class="day-content day-hidden" data-day="8">
             <div class="card">
                 <div class="date-header">Friday, July 18, 2025</div>
-                <div class="location">🏯 Kochi</div>
+                <div class="location">Kochi</div>
                 
                 <div class="event cruise-info">
                     <div class="event-time">8:00 AM - 6:00 PM</div>
@@ -719,7 +724,7 @@
         <div class="day-content day-hidden" data-day="9">
             <div class="card">
                 <div class="date-header">Saturday, July 19, 2025</div>
-                <div class="location">🕊️ Hiroshima</div>
+                <div class="location">Hiroshima</div>
                 
                 <div class="event cruise-info">
                     <div class="event-time">10:00 AM - 7:00 PM</div>
@@ -741,7 +746,7 @@
         <div class="day-content day-hidden" data-day="10">
             <div class="card">
                 <div class="date-header">Sunday, July 20, 2025</div>
-                <div class="location">🌊 At Sea</div>
+                <div class="location">At Sea</div>
                 
                 <div class="event cruise-info">
                     <div class="event-time">All Day</div>
@@ -763,7 +768,7 @@
         <div class="day-content day-hidden" data-day="11">
             <div class="card">
                 <div class="date-header">Monday, July 21, 2025</div>
-                <div class="location">🏮 Nagasaki</div>
+                <div class="location">Nagasaki</div>
                 
                 <div class="event cruise-info">
                     <div class="event-time">7:00 AM - 5:00 PM</div>
@@ -785,7 +790,7 @@
         <div class="day-content day-hidden" data-day="12">
             <div class="card">
                 <div class="date-header">Tuesday, July 22, 2025</div>
-                <div class="location">🌺 Jeju Island, South Korea</div>
+                <div class="location">Jeju Island, South Korea</div>
                 
                 <div class="event cruise-info">
                     <div class="event-time">7:00 AM - 4:00 PM</div>
@@ -801,7 +806,7 @@
         <div class="day-content day-hidden" data-day="13">
             <div class="card">
                 <div class="date-header">Wednesday, July 23, 2025</div>
-                <div class="location">🌋 Kagoshima</div>
+                <div class="location">Kagoshima</div>
                 
                 <div class="event cruise-info">
                     <div class="event-time">10:00 AM - 6:00 PM</div>
@@ -817,7 +822,7 @@
         <div class="day-content day-hidden" data-day="14">
             <div class="card">
                 <div class="date-header">Thursday, July 24, 2025</div>
-                <div class="location">🌊 At Sea</div>
+                <div class="location">At Sea</div>
                 
                 <div class="event cruise-info">
                     <div class="event-time">All Day</div>
@@ -833,7 +838,7 @@
         <div class="day-content day-hidden" data-day="15">
             <div class="card">
                 <div class="date-header">Friday, July 25, 2025</div>
-                <div class="location">🛫 Yokohama → Dubai</div>
+                <div class="location">Yokohama → Dubai</div>
                 
                 <div class="event cruise-info">
                     <div class="event-time">6:30 AM</div>
@@ -864,7 +869,7 @@
         <div class="day-content day-hidden" data-day="16">
             <div class="card">
                 <div class="date-header">Saturday, July 26, 2025</div>
-                <div class="location">🏠 Journey Home</div>
+                <div class="location">Journey Home</div>
                 
                 <div class="event">
                     <div class="event-time">4:10 AM</div>
@@ -954,9 +959,10 @@
             currentView = 'day';
             indexView.style.display = 'none';
             calculatorView.style.display = 'none';
+            navigation.style.display = 'none'; // Hide nav while content loads
             dayContents.forEach(day => day.style.display = 'none');
             const currentDayElement = document.querySelector(`[data-day="${currentDay}"]`);
-            if (currentDayElement) currentDayElement.style.display = 'block';
+            if (currentDayElement) currentDayElement.style.display = 'flex'; // Use flex
             dayCounter.textContent = dayTitles[currentDay - 1];
             homeBtn.style.display = 'inline-block';
             document.getElementById('prevBtn').disabled = currentDay === 1;
@@ -975,6 +981,7 @@
         }
         
         function showCalculator() {
+            currentView = 'calculator';
             dayContents.forEach(day => day.style.display = 'none');
             indexView.style.display = 'none';
             navigation.style.display = 'none';
@@ -1069,7 +1076,9 @@
                 changeDay(diff > 0 ? 1 : -1);
             }
         });
-
+        
+        document.querySelectorAll('.day-content').forEach(el => el.style.display = 'flex');
+        
         // Initialize the app
         showIndexView();
         fetchExchangeRate();
