@@ -680,7 +680,7 @@
                                 minute: '2-digit' 
                             });
                             
-                            const dataType = weather.current.isDemo ? 'Demo data - Get free API key at visualcrossing.com' : 'Real weather data';
+                            const dataType = weather.current.isDemo ? 'Demo data' : 'Real weather data';
                             document.getElementById(`${city}-update-time`).textContent = 
                                 `Last updated: ${updateTime} (${dataType})`;
                         } else {
