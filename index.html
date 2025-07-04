@@ -46,11 +46,10 @@
             background: var(--dark);
             color: var(--white);
             min-height: 100vh;
-            min-height: 100dvh; /* Dynamic viewport height for mobile */
+            min-height: 100dvh;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            /* Android-specific fullscreen */
             -webkit-user-select: none;
             -webkit-touch-callout: none;
             -webkit-tap-highlight-color: transparent;
@@ -58,21 +57,20 @@
 
         .app-container {
             min-height: 100vh;
-            min-height: 100dvh; /* Dynamic viewport height */
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             position: relative;
             width: 100vw;
         }
 
-        /* Animated background */
         .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            height: 100dvh; /* Dynamic viewport height */
+            height: 100dvh;
             z-index: -1;
             background: var(--gradient-1);
             opacity: 0.9;
@@ -97,7 +95,6 @@
             66% { transform: translateY(10px) rotate(-1deg); }
         }
 
-        /* Header */
         .header {
             padding: env(safe-area-inset-top, 20px) 20px 30px;
             padding-top: max(env(safe-area-inset-top), 60px);
@@ -116,7 +113,6 @@
             letter-spacing: -0.5px;
         }
 
-        /* Navigation - Fixed spacing */
         .nav-container {
             margin-bottom: 30px;
             padding: 0 20px;
@@ -156,16 +152,14 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Main content - Fixed consistent spacing */
         .main-content {
             flex: 1;
             padding: 0 20px calc(env(safe-area-inset-bottom, 20px) + 80px) 20px;
             display: flex;
             flex-direction: column;
-            gap: 24px; /* Consistent gap between all cards */
+            gap: 24px;
         }
 
-        /* Cards */
         .card {
             background: rgba(15, 23, 42, 0.6);
             border-radius: 24px;
@@ -192,7 +186,6 @@
             box-shadow: var(--shadow-xl);
         }
 
-        /* Countdown card */
         .countdown-card {
             background: var(--gradient-2);
             text-align: center;
@@ -221,11 +214,10 @@
             font-weight: 500;
         }
 
-        /* Time cards - Fixed consistent spacing */
         .time-grid {
             display: flex;
             flex-direction: column;
-            gap: 24px; /* Consistent gap between time cards */
+            gap: 24px;
         }
 
         .time-card {
@@ -336,7 +328,6 @@
             font-size: 28px;
         }
 
-        /* Loading animation */
         .loading {
             display: inline-block;
             width: 20px;
@@ -351,7 +342,20 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Responsive design - Remove desktop constraints for Android */
+        .error-message {
+            color: #ff6b6b;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .weather-update-time {
+            font-size: 12px;
+            opacity: 0.7;
+            text-align: center;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
         @media (min-width: 768px) {
             .app-container {
                 max-width: 100vw;
@@ -360,7 +364,6 @@
             }
         }
 
-        /* Small screen navigation adjustments */
         @media (max-width: 480px) {
             .nav-tab {
                 padding: 10px 8px;
@@ -368,7 +371,6 @@
             }
         }
 
-        /* Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -384,13 +386,11 @@
             animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
-        /* Stagger animation delays */
         .card:nth-child(1) { animation-delay: 0.1s; }
         .card:nth-child(2) { animation-delay: 0.2s; }
         .card:nth-child(3) { animation-delay: 0.3s; }
         .card:nth-child(4) { animation-delay: 0.4s; }
 
-        /* Pulse animation for live updates */
         .pulse {
             animation: pulse 2s infinite;
         }
@@ -409,16 +409,16 @@
     <div class="app-container">    
         <div class="bg-animation"></div>
         <header class="header">
-            <img src="images/japan_plan.png" width="93%" alt="Japan Plan">
+            <h1>🗾 Japan Plan</h1>
         </header>
 
         <nav class="nav-container">
             <div class="nav-tabs">
-                <a href="index.html" class="nav-tab active">Home.</a>
-                <a href="itinerary.html" class="nav-tab">Itinerary</a>
-                <a href="calculator.html" class="nav-tab">Calculator</a>
-                <a href="phrases.html" class="nav-tab">Phrases</a>
-                <a href="gifts.html" class="nav-tab">Gifts</a>
+                <a href="#" class="nav-tab active">Home</a>
+                <a href="#" class="nav-tab">Itinerary</a>
+                <a href="#" class="nav-tab">Calculator</a>
+                <a href="#" class="nav-tab">Phrases</a>
+                <a href="#" class="nav-tab">Gifts</a>
             </div>
         </nav>
 
@@ -426,6 +426,7 @@
             <div class="card countdown-card animate-in" id="countdown-card">
                 <h2>Days Until Departure</h2>
                 <div class="countdown-number" id="countdown-days">Loading...</div>
+                <div class="countdown-label">days to go</div>
             </div>
 
             <div class="time-grid">
@@ -444,8 +445,8 @@
                     </div>
                     <div class="weather-info">
                         <div class="weather-item">
-                            <div class="weather-label">Today</div>
-                            <div class="weather-value" id="tokyo-today-weather">
+                            <div class="weather-label">Current</div>
+                            <div class="weather-value" id="tokyo-current-weather">
                                 <div class="loading"></div>
                             </div>
                         </div>
@@ -456,6 +457,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="weather-update-time" id="tokyo-update-time"></div>
                 </div>
 
                 <div class="card time-card galway-card animate-in">
@@ -473,8 +475,8 @@
                     </div>
                     <div class="weather-info">
                         <div class="weather-item">
-                            <div class="weather-label">Today</div>
-                            <div class="weather-value" id="galway-today-weather">
+                            <div class="weather-label">Current</div>
+                            <div class="weather-value" id="galway-current-weather">
                                 <div class="loading"></div>
                             </div>
                         </div>
@@ -485,6 +487,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="weather-update-time" id="galway-update-time"></div>
                 </div>
             </div>
         </main>
@@ -512,10 +515,10 @@
                 const countdownEl = document.getElementById('countdown-days');
                 const countdownCard = document.getElementById('countdown-card');
                 const today = new Date();
-                today.setHours(0, 0, 0, 0); // Set to start of day for accurate calculation
+                today.setHours(0, 0, 0, 0);
                 
                 const departureDate = new Date("2025-07-11");
-                departureDate.setHours(0, 0, 0, 0); // Set to start of day
+                departureDate.setHours(0, 0, 0, 0);
                 
                 const diffTime = departureDate - today;
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -531,26 +534,183 @@
                 }
             }
 
-            async function fetchWeather() {
-                // Simulate loading delay with more realistic weather data
-                setTimeout(() => {
-                    document.getElementById('tokyo-today-weather').innerHTML = '<span class="weather-icon">☀️</span> 28°C';
-                    document.getElementById('tokyo-tomorrow-weather').innerHTML = '<span class="weather-icon">🌤️</span> 26°C';
-                    document.getElementById('galway-today-weather').innerHTML = '<span class="weather-icon">🌧️</span> 18°C';
-                    document.getElementById('galway-tomorrow-weather').innerHTML = '<span class="weather-icon">⛅</span> 20°C';
-                }, 1500);
+            function getWeatherIcon(condition) {
+                const icons = {
+                    'clear': '☀️',
+                    'sunny': '☀️',
+                    'partly-cloudy': '⛅',
+                    'cloudy': '☁️',
+                    'overcast': '☁️',
+                    'rain': '🌧️',
+                    'heavy-rain': '🌧️',
+                    'showers': '🌦️',
+                    'snow': '❄️',
+                    'thunderstorm': '⛈️',
+                    'fog': '🌫️',
+                    'mist': '🌫️',
+                    'wind': '💨'
+                };
+                return icons[condition] || '🌤️';
+            }
+
+            async function fetchRealWeatherData(city, lat, lon) {
+                try {
+                    // Visual Crossing Weather API supports CORS
+                    const apiKey = '5SY47VHA6EUEPT552HUJLA6L3';
+                    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${lat},${lon}?unitGroup=metric&include=current,days&key=${apiKey}&contentType=json`);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    const getWeatherIcon = (icon) => {
+                        const iconMap = {
+                            'clear-day': '☀️',
+                            'clear-night': '🌙',
+                            'partly-cloudy-day': '🌤️',
+                            'partly-cloudy-night': '☁️',
+                            'cloudy': '☁️',
+                            'rain': '🌧️',
+                            'showers-day': '🌦️',
+                            'showers-night': '🌧️',
+                            'thunder-rain': '⛈️',
+                            'thunder-showers-day': '⛈️',
+                            'thunder-showers-night': '⛈️',
+                            'snow': '❄️',
+                            'snow-showers-day': '🌨️',
+                            'snow-showers-night': '❄️',
+                            'fog': '🌫️',
+                            'wind': '💨'
+                        };
+                        return iconMap[icon] || '🌤️';
+                    };
+                    
+                    return {
+                        current: {
+                            temp: Math.round(data.currentConditions.temp),
+                            icon: getWeatherIcon(data.currentConditions.icon),
+                            desc: data.currentConditions.conditions,
+                            humidity: data.currentConditions.humidity,
+                            windSpeed: data.currentConditions.windspeed
+                        },
+                        tomorrow: {
+                            temp: Math.round(data.days[1].tempmax),
+                            icon: getWeatherIcon(data.days[1].icon),
+                            desc: data.days[1].conditions,
+                            minTemp: Math.round(data.days[1].tempmin)
+                        }
+                    };
+                } catch (error) {
+                    console.error(`Error with Visual Crossing API for ${city}:`, error);
+                    
+                    // Try wttr.in as fallback (sometimes works)
+                    try {
+                        const wttrResponse = await fetch(`https://wttr.in/${city}?format=j1`);
+                        if (wttrResponse.ok) {
+                            const wttrData = await wttrResponse.json();
+                            
+                            const getWeatherIcon = (code) => {
+                                const codes = {
+                                    '113': '☀️', '116': '🌤️', '119': '☁️', '122': '☁️',
+                                    '143': '🌫️', '176': '🌦️', '200': '⛈️', '293': '🌦️',
+                                    '296': '🌧️', '302': '🌧️', '308': '🌧️', '353': '🌦️',
+                                    '356': '🌧️', '386': '⛈️', '389': '⛈️'
+                                };
+                                return codes[code] || '🌤️';
+                            };
+                            
+                            const current = wttrData.current_condition[0];
+                            const tomorrow = wttrData.weather[1];
+                            
+                            return {
+                                current: {
+                                    temp: parseInt(current.temp_C),
+                                    icon: getWeatherIcon(current.weatherCode),
+                                    desc: current.weatherDesc[0].value
+                                },
+                                tomorrow: {
+                                    temp: parseInt(tomorrow.maxtempC),
+                                    icon: getWeatherIcon(tomorrow.hourly[4].weatherCode),
+                                    desc: tomorrow.hourly[4].weatherDesc[0].value
+                                }
+                            };
+                        }
+                    } catch (wttrError) {
+                        console.error('wttr.in also failed:', wttrError);
+                    }
+                    
+                    // Final fallback: Create realistic demo data with a note
+                    return {
+                        current: {
+                            temp: city === 'tokyo' ? 28 : 18,
+                            icon: city === 'tokyo' ? '🌤️' : '🌧️',
+                            desc: 'Demo Data (API Key Needed)',
+                            isDemo: true
+                        },
+                        tomorrow: {
+                            temp: city === 'tokyo' ? 30 : 20,
+                            icon: city === 'tokyo' ? '☀️' : '⛅',
+                            desc: 'Demo Data',
+                            isDemo: true
+                        }
+                    };
+                }
+            }
+
+            async function updateWeather() {
+                const cities = {
+                    tokyo: { lat: 35.6762, lon: 139.6503 },
+                    galway: { lat: 53.2744, lon: -9.0492 }
+                };
+
+                for (const [city, coords] of Object.entries(cities)) {
+                    try {
+                        const weather = await fetchRealWeatherData(city, coords.lat, coords.lon);
+                        
+                        if (weather) {
+                            document.getElementById(`${city}-current-weather`).innerHTML = 
+                                `<span class="weather-icon">${weather.current.icon}</span> ${weather.current.temp}°C`;
+                            document.getElementById(`${city}-tomorrow-weather`).innerHTML = 
+                                `<span class="weather-icon">${weather.tomorrow.icon}</span> ${weather.tomorrow.temp}°C`;
+                            
+                            const updateTime = new Date().toLocaleTimeString('en-GB', { 
+                                hour: '2-digit', 
+                                minute: '2-digit' 
+                            });
+                            
+                            const dataType = weather.current.isDemo ? 'Demo data - Get free API key at visualcrossing.com' : 'Real weather data';
+                            document.getElementById(`${city}-update-time`).textContent = 
+                                `Last updated: ${updateTime} (${dataType})`;
+                        } else {
+                            throw new Error('No weather data available');
+                        }
+                    } catch (error) {
+                        console.error(`Failed to get weather for ${city}:`, error);
+                        document.getElementById(`${city}-current-weather`).innerHTML = 
+                            '<span class="error-message">Weather unavailable</span>';
+                        document.getElementById(`${city}-tomorrow-weather`).innerHTML = 
+                            '<span class="error-message">Get API key</span>';
+                        document.getElementById(`${city}-update-time`).textContent = 
+                            'Get free API key at visualcrossing.com for real data';
+                    }
+                }
             }
 
             // Initialize
             updateAllInfo();
             updateCountdown();
-            fetchWeather();
+            updateWeather();
             
             // Update every second
             setInterval(updateAllInfo, 1000);
             
-            // Update countdown every minute (more efficient than every second)
+            // Update countdown every minute
             setInterval(updateCountdown, 60000);
+            
+            // Update weather every 15 minutes (real APIs have rate limits)
+            setInterval(updateWeather, 15 * 60 * 1000);
         });
     </script>
 </body>
