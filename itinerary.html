@@ -129,12 +129,12 @@
         }
 
         .card {
-            background: rgba(248, 250, 252, 0.85); /* Frosted Light Background */
+            background: rgba(248, 250, 252, 0.15); /* Frosted Light Background */
             border-radius: 24px;
             padding: 25px;
             margin-bottom: 20px;
             box-shadow: var(--shadow-xl);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(24px);
             border: 1px solid rgba(255, 255, 255, 0.4);
             flex-grow: 1;
             display: flex;
@@ -150,7 +150,7 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(15, 23, 42, 0.1), transparent); /* Darker shine for light bg */
+            background: linear-gradient(90deg, transparent, rgba(15, 23, 42, 0.8), transparent); /* Darker shine for light bg */
         }
 
         .date-header {
@@ -397,11 +397,10 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🐞 The Japan Plan v2 🦆</h1>
+                <img src="images/japan_plan.png" width="92%">
             <div class="day-counter" id="dayCounter">July 11, 2025</div>
             <div class="header-buttons">
-                <button class="home-btn" id="homeBtn" onclick="showIndex()">📅 All Days</button>
-                <button class="home-btn" id="calcBtn" onclick="showCalculator()">¥€ Calculator</button>
+<button class="home-btn" id="homeBtn" onclick="showIndex()" style="font-size: 24px; padding: 12px 20px;">📅 All Days</button>
             </div>
         </div>
 
