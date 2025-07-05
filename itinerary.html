@@ -402,13 +402,66 @@
                 padding: 20px;
             }
         }
+		
+		
+		.nav-container {
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        .nav-tabs {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 4px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 16px;
+            padding: 4px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-tab {
+            padding: 12px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--gray-light);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+        }
+
+        .nav-tab.active {
+            background: var(--white);
+            color: var(--dark);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-tab:not(.active):hover {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.1);
+        }
+		
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
                 <img src="images/japan_plan.png" width="92%">
-            <div class="day-counter" id="dayCounter">July 11, 2025</div>
+				        <nav class="nav-container">
+            <div class="nav-tabs">
+                <a href="index.html" class="nav-tab">Home</a>
+                <a href="itinerary.html" class="nav-tab active">Itinerary</a>
+                <a href="#" class="nav-tab">Calculator</a>
+                <a href="#" class="nav-tab">Phrases</a>
+                <a href="#" class="nav-tab">Gifts</a>
+            </div>
+        </nav>
             <div class="header-buttons">
 <button class="home-btn" id="homeBtn" onclick="showIndex()" style="font-size: 16px; padding: 12px 20px;">📅 All Days</button>
             </div>
