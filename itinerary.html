@@ -447,6 +447,61 @@
             background: rgba(255, 255, 255, 0.1);
         }
 		
+		
+		
+.day-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .day-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+            background: var(--white);
+        }
+
+        /* Cruise day cards (days 3-15) with sea background image */
+        .day-card:nth-child(n+3):nth-child(-n+15) {
+            background: url('images/sea.png') center/cover;
+            border: 1px solid #4169e1;
+            position: relative;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .day-card:nth-child(n+3):nth-child(-n+15)::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .day-card:nth-child(n+3):nth-child(-n+15):hover::before {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .day-card:nth-child(n+3):nth-child(-n+15) * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Override text colors for cruise day cards */
+        .day-card:nth-child(n+3):nth-child(-n+15) .day-card-number,
+        .day-card:nth-child(n+3):nth-child(-n+15) .day-card-date,
+        .day-card:nth-child(n+3):nth-child(-n+15) .day-card-location {
+            color: white;
+        }
     </style>
 </head>
 <body>
