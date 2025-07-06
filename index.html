@@ -314,6 +314,127 @@
             font-size: 28px;
         }
 
+        /* 3D Packing List Button Styles */
+        .packing-button-container {
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .packing-button {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px 40px;
+            width: 100%;
+            background: linear-gradient(145deg, #ff6b6b, #ee5a52, #dc143c);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-family: inherit;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* 3D Effect */
+            box-shadow: 
+                0 8px 16px rgba(220, 20, 60, 0.3),
+                0 4px 8px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+            
+            transform: perspective(1000px) rotateX(0deg) translateY(0px);
+            
+            /* Glow animation */
+            animation: packing-glow 4s ease-in-out infinite;
+        }
+
+        .packing-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s;
+        }
+
+        .packing-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(145deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .packing-button:hover {
+            transform: perspective(1000px) rotateX(-5deg) translateY(-3px);
+            box-shadow: 
+                0 12px 24px rgba(220, 20, 60, 0.4),
+                0 8px 16px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+            
+            background: linear-gradient(145deg, #ff7b7b, #ff5a52, #ec243c);
+        }
+
+        .packing-button:hover::before {
+            left: 100%;
+        }
+
+        .packing-button:active {
+            transform: perspective(1000px) rotateX(-2deg) translateY(-1px);
+            box-shadow: 
+                0 6px 12px rgba(220, 20, 60, 0.3),
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .packing-icon {
+            font-size: 24px;
+            display: inline-block;
+            transform: translateZ(10px);
+            animation: luggage-bounce 2s ease-in-out infinite;
+        }
+
+        .packing-text {
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes packing-glow {
+            0%, 100% {
+                filter: drop-shadow(0 0 5px rgba(220, 20, 60, 0.3));
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(220, 20, 60, 0.6));
+            }
+        }
+
+        @keyframes luggage-bounce {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-2px) rotate(1deg);
+            }
+            75% {
+                transform: translateY(-1px) rotate(-1deg);
+            }
+        }
+
         .loading {
             display: inline-block;
             width: 20px;
@@ -372,10 +493,13 @@
             .countdown-card {
                 padding: 18px 20px 14px 20px;
             }
+
+            .packing-button {
+                padding: 18px 32px;
+                font-size: 16px;
+            }
         }
     </style>
-	<link rel="manifest" href="manifest.json">
-
 </head>
 <body>
     <div class="container">
@@ -453,6 +577,14 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- 3D Packing List Button -->
+        <div class="packing-button-container">
+            <a href="list.html" class="packing-button">
+                <span class="packing-icon">🧳</span>
+                <span class="packing-text">Packing List</span>
+            </a>
         </div>
     </div>
 
