@@ -357,6 +357,80 @@
             box-shadow: var(--shadow);
         }
 
+        .voice-list {
+            margin-bottom: 20px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .voice-list .voice-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        #voiceButtons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        #voiceButtons::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #voiceButtons::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        #voiceButtons::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .individual-voice-btn {
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            backdrop-filter: blur(10px);
+        }
+
+        .individual-voice-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .individual-voice-btn.active {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: var(--dark);
+            box-shadow: var(--shadow);
+        }
+
+        .individual-voice-btn .voice-name {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .individual-voice-btn .voice-details {
+            font-size: 10px;
+            opacity: 0.8;
+        }
+
         .tip-box {
             background: rgba(16, 185, 129, 0.1);
             border: 1px solid rgba(16, 185, 129, 0.3);
@@ -390,6 +464,21 @@
             .category-tabs {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .voice-selector {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            
+            .voice-label {
+                margin-right: 0;
+                margin-bottom: 4px;
+            }
+            
+            #voiceButtons {
+                max-height: 150px;
+            }
         }
     </style>
 </head>
@@ -415,8 +504,13 @@
             
             <div class="voice-selector">
                 <div class="voice-label">🗣️ Voice:</div>
-                <button class="voice-btn active" id="maleBtn" onclick="selectVoice('male')">👨 Male</button>
-                <button class="voice-btn" id="femaleBtn" onclick="selectVoice('female')">👩 Female</button>
+                <button class="voice-btn" id="autoBtn" onclick="selectVoiceMode('auto')">🤖 Auto</button>
+                <button class="voice-btn active" id="manualBtn" onclick="selectVoiceMode('manual')">📋 Choose</button>
+            </div>
+            
+            <div class="voice-list" id="voiceList" style="display: block;">
+                <div class="voice-label">Available Japanese Voices:</div>
+                <div id="voiceButtons"></div>
             </div>
             
             <div class="category-tabs">
@@ -738,60 +832,118 @@
 
             <div class="tip-box">
                 <h4>💡 Pro Tip</h4>
-                <p>Choose your preferred voice type above, then tap any phrase to practice pronunciation! Bowing slightly when greeting shows respect. Adding "onegaishimasu" (please) makes requests more polite.</p>
+                <p>Try different voices from the list above to find the male voice you prefer! Each voice button plays a test "hello" when clicked. Once you've found your favorite, tap any phrase to practice pronunciation!</p>
             </div>
         </div>
     </div>
 
     <script>
         let currentSpeech = null;
-        let maleJapaneseVoices = [];
-        let femaleJapaneseVoices = [];
-        let selectedVoiceType = 'male'; // Default to male
+        let allJapaneseVoices = [];
+        let selectedVoice = null;
+        let voiceMode = 'manual'; // 'auto' or 'manual'
 
         // Initialize voice selection when voices are loaded
         function initializeVoices() {
             const voices = speechSynthesis.getVoices();
             
-            // Reset voice arrays
-            maleJapaneseVoices = [];
-            femaleJapaneseVoices = [];
-            
             // Find all Japanese voices
-            const japaneseVoices = voices.filter(voice => 
+            allJapaneseVoices = voices.filter(voice => 
                 voice.lang.includes('ja') || voice.lang.includes('JP')
             );
             
-            japaneseVoices.forEach(voice => {
-                const name = voice.name.toLowerCase();
-                
-                // Try to detect male voices by name patterns
-                if (name.includes('male') || name.includes('man') || 
-                    name.includes('kenji') || name.includes('ichiro') || 
-                    name.includes('otoya') || name.includes('hiroshi') ||
-                    name.includes('takeshi') || name.includes('david') ||
-                    name.includes('kyoko male') || name.includes('sayaka male')) {
-                    maleJapaneseVoices.push(voice);
-                }
-                // Try to detect female voices by name patterns
-                else if (name.includes('female') || name.includes('woman') ||
-                         name.includes('kyoko') || name.includes('sayaka') ||
-                         name.includes('mei') || name.includes('yuki') ||
-                         name.includes('haruka') || name.includes('nanako') ||
-                         name.includes('otafuku') || !name.includes('male')) {
-                    femaleJapaneseVoices.push(voice);
-                }
-            });
+            console.log('All Japanese voices found:', allJapaneseVoices);
             
-            // If we couldn't categorize them, split them roughly in half
-            if (maleJapaneseVoices.length === 0 && femaleJapaneseVoices.length === 0) {
-                const half = Math.ceil(japaneseVoices.length / 2);
-                maleJapaneseVoices = japaneseVoices.slice(0, half);
-                femaleJapaneseVoices = japaneseVoices.slice(half);
+            // Populate the voice selection UI
+            populateVoiceList();
+            
+            // Set default voice to first available
+            if (allJapaneseVoices.length > 0 && !selectedVoice) {
+                selectedVoice = allJapaneseVoices[0];
+                updateVoiceSelection();
+            }
+        }
+
+        function populateVoiceList() {
+            const voiceButtons = document.getElementById('voiceButtons');
+            voiceButtons.innerHTML = '';
+            
+            if (allJapaneseVoices.length === 0) {
+                voiceButtons.innerHTML = '<p style="color: var(--gray-light); font-size: 12px;">No Japanese voices found. Loading...</p>';
+                return;
             }
             
-            console.log('Male voices:', maleJapaneseVoices.map(v => v.name));
-            console.log('Female voices:', femaleJapaneseVoices.map(v => v.name));
+            allJapaneseVoices.forEach((voice, index) => {
+                const button = document.createElement('button');
+                button.className = 'individual-voice-btn';
+                button.onclick = () => selectSpecificVoice(voice);
+                
+                // Try to detect gender from voice name
+                const name = voice.name.toLowerCase();
+                let genderHint = '';
+                if (name.includes('male') || name.includes('man') || 
+                    name.includes('kenji') || name.includes('ichiro') || 
+                    name.includes('takeshi') || name.includes('hiroshi')) {
+                    genderHint = ' 👨';
+                } else if (name.includes('female') || name.includes('woman') ||
+                           name.includes('kyoko') || name.includes('sayaka') ||
+                           name.includes('mei') || name.includes('yuki')) {
+                    genderHint = ' 👩';
+                }
+                
+                button.innerHTML = `
+                    <div class="voice-name">${voice.name}${genderHint}</div>
+                    <div class="voice-details">${voice.lang} • ${voice.localService ? 'Local' : 'Network'}</div>
+                `;
+                
+                voiceButtons.appendChild(button);
+            });
+            
+            updateVoiceSelection();
+        }
+
+        function selectSpecificVoice(voice) {
+            selectedVoice = voice;
+            updateVoiceSelection();
+            
+            // Play a test phrase
+            const testUtterance = new SpeechSynthesisUtterance('こんにちは');
+            testUtterance.voice = voice;
+            testUtterance.lang = 'ja-JP';
+            testUtterance.rate = 0.8;
+            speechSynthesis.speak(testUtterance);
+        }
+
+        function updateVoiceSelection() {
+            document.querySelectorAll('.individual-voice-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (selectedVoice) {
+                const buttons = document.querySelectorAll('.individual-voice-btn');
+                buttons.forEach((btn, index) => {
+                    if (allJapaneseVoices[index] === selectedVoice) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+        }
+
+        function selectVoiceMode(mode) {
+            voiceMode = mode;
+            
+            // Update button states
+            document.querySelectorAll('.voice-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (mode === 'auto') {
+                document.getElementById('autoBtn').classList.add('active');
+                document.getElementById('voiceList').style.display = 'none';
+            } else {
+                document.getElementById('manualBtn').classList.add('active');
+                document.getElementById('voiceList').style.display = 'block';
+            }
         }
 
         // Load voices when available
@@ -800,22 +952,8 @@
         }
         
         // Also try to load immediately
-        initializeVoices();
-
-        function selectVoice(type) {
-            selectedVoiceType = type;
-            
-            // Update button states
-            document.querySelectorAll('.voice-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            if (type === 'male') {
-                document.getElementById('maleBtn').classList.add('active');
-            } else {
-                document.getElementById('femaleBtn').classList.add('active');
-            }
-        }
+        setTimeout(initializeVoices, 100);
+        setTimeout(initializeVoices, 1000); // Backup timing
 
         function showCategory(category) {
             // Hide all categories
@@ -858,15 +996,10 @@
             utterance.lang = 'ja-JP';
             utterance.rate = 0.8;
             
-            // Select voice based on user preference
-            let selectedVoices = selectedVoiceType === 'male' ? maleJapaneseVoices : femaleJapaneseVoices;
-            
-            if (selectedVoices.length > 0) {
-                utterance.voice = selectedVoices[0]; // Use the first available voice of selected type
+            // Use selected voice if available
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
             }
-            
-            // Adjust pitch based on selected voice type
-            utterance.pitch = selectedVoiceType === 'male' ? 0.8 : 1.1;
             
             utterance.onend = () => {
                 element.classList.remove('playing');
