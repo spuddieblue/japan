@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Japan Plan - Home</title>
+    <title>Gifts - Japan Trip</title>
     <style>
         :root {
             --primary: #6366f1;
@@ -159,201 +159,270 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
         }
 
-        .countdown-card {
-            background: var(--gradient-japan);
+        .date-header {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 30px;
             text-align: center;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            position: relative;
-            overflow: hidden;
-            animation: countdown-glow 3s ease-in-out infinite;
         }
 
-        .countdown-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-        }
-
-        .countdown-card > * {
-            position: relative;
-            z-index: 1;
-        }
-
-        .countdown-number {
-            font-size: clamp(48px, 15vw, 72px);
-            font-weight: 900;
-            line-height: 1;
-            margin-bottom: 8px;
-            color: #ffffff;
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-        }
-
-        .countdown-label {
-            font-size: 14px;
-            opacity: 0.9;
+        .add-gift-btn {
+            width: 100%;
+            padding: 16px;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            color: #10b981;
+            font-size: 16px;
             font-weight: 600;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        .time-card {
-            padding: 24px;
-            border-radius: 24px;
+        .add-gift-btn:hover {
+            background: rgba(16, 185, 129, 0.3);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .gift-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .gift-item {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            margin-bottom: 20px;
         }
 
-        .time-card::before {
+        .gift-item::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            opacity: 0.1;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            height: 2px;
+            background: var(--gradient-japan);
         }
 
-        .tokyo-card {
-            background: var(--gradient-3);
+        .gift-item:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: var(--shadow-lg);
         }
 
-        .galway-card {
-            background: var(--gradient-4);
-        }
-
-        .time-card-content {
+        .gift-person {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+        }
+
+        .gift-person-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .gift-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 6px;
+            color: #ff6b6b;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: rgba(239, 68, 68, 0.4);
+        }
+
+        .gift-description {
+            color: var(--gray-light);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .gift-name {
+            font-size: 16px;
+            color: var(--secondary);
+            font-weight: 600;
+            background: rgba(245, 158, 11, 0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .gift-summary {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .gift-summary h3 {
+            color: var(--white);
+            margin-bottom: 8px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .gift-summary p {
+            color: var(--gray-light);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 350px;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
             margin-bottom: 16px;
         }
 
-        .city-info {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .city-name {
-            font-size: 18px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
-        }
-
-        .city-flag {
-            font-size: 36px;
-        }
-
-        .time-info {
-            text-align: right;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        .time-display {
-            font-size: clamp(24px, 7vw, 32px);
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 4px;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .date-display {
-            font-size: 13px;
-            opacity: 0.8;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-
-        .weather-info {
-            display: flex;
-            justify-content: space-between;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .weather-item {
-            text-align: center;
-            flex: 1;
-        }
-
-        .weather-label {
-            font-size: 16px;
-            opacity: 0.8;
-            margin-bottom: 8px;
+        .form-group label {
+            display: block;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .weather-value {
-            font-size: 18px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .weather-icon {
-            font-size: 28px;
-        }
-
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: var(--white);
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .error-message {
-            color: #ff6b6b;
+            color: var(--white);
+            margin-bottom: 6px;
             font-size: 14px;
-            font-weight: 500;
         }
 
-        .pulse {
-            animation: pulse 2s infinite;
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.8;
-            }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+            background: rgba(255, 255, 255, 0.15);
         }
 
-        @keyframes countdown-glow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(220, 20, 60, 0.3), 0 0 40px rgba(220, 20, 60, 0.1);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(220, 20, 60, 0.5), 0 0 60px rgba(220, 20, 60, 0.2);
-            }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--gray-light);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray-light);
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--white);
         }
 
         @media (max-width: 480px) {
@@ -364,6 +433,29 @@
             .card {
                 padding: 20px;
             }
+            
+            .gift-item {
+                padding: 16px;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gift-item {
+            animation: slideIn 0.6s ease-out;
         }
     </style>
 </head>
@@ -373,232 +465,217 @@
             <img src="images/japan_plan.png" width="94%" alt="Japan Trip Plan">
             <nav class="nav-container">
                 <div class="nav-tabs">
-                    <a href="index.html" class="nav-tab active">Home</a>
+                    <a href="index.html" class="nav-tab">Home</a>
                     <a href="itinerary.html" class="nav-tab">Itinerary</a>
                     <a href="calculator.html" class="nav-tab">Calculator</a>
-                    <a href="#" class="nav-tab">Phrases</a>
-                    <a href="gifts.html" class="nav-tab">Gifts</a>
+                    <a href="phrases.html" class="nav-tab">Phrases</a>
+                    <a href="gifts.html" class="nav-tab active">Gifts</a>
                 </div>
             </nav>
         </div>
 
-        <div class="card countdown-card" id="countdown-card">
-            <div class="countdown-number" id="countdown-days">Loading...</div>
-            <div class="countdown-label">days to go</div>
-        </div>
+        <div class="card">
+            <div class="date-header">🎁 Gift List</div>
+            
+            <button class="add-gift-btn" onclick="openAddModal()">
+                ➕ Add New Gift
+            </button>
+            
+            <div class="gift-grid" id="giftGrid">
+                <!-- Gifts will be dynamically loaded here -->
+            </div>
 
-        <div class="card time-card tokyo-card">
-            <div class="time-card-content">
-                <div class="city-info">
-                    <div class="city-name">
-                        <span class="city-flag">🗼</span>
-                        Tokyo
-                    </div>
-                </div>
-                <div class="time-info">
-                    <div class="time-display pulse" id="tokyo-time">Loading...</div>
-                    <div class="date-display" id="tokyo-date">Loading date...</div>
-                </div>
-            </div>
-            <div class="weather-info">
-                <div class="weather-item">
-                    <div class="weather-label">Current</div>
-                    <div class="weather-value" id="tokyo-current-weather">
-                        <div class="loading"></div>
-                    </div>
-                </div>
-                <div class="weather-item">
-                    <div class="weather-label">Tomorrow</div>
-                    <div class="weather-value" id="tokyo-tomorrow-weather">
-                        <div class="loading"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card time-card galway-card">
-            <div class="time-card-content">
-                <div class="city-info">
-                    <div class="city-name">
-                        <span class="city-flag">🍀</span>
-                        Galway
-                    </div>
-                </div>
-                <div class="time-info">
-                    <div class="time-display pulse" id="galway-time">Loading...</div>
-                    <div class="date-display" id="galway-date">Loading date...</div>
-                </div>
-            </div>
-            <div class="weather-info">
-                <div class="weather-item">
-                    <div class="weather-label">Current</div>
-                    <div class="weather-value" id="galway-current-weather">
-                        <div class="loading"></div>
-                    </div>
-                </div>
-                <div class="weather-item">
-                    <div class="weather-label">Tomorrow</div>
-                    <div class="weather-value" id="galway-tomorrow-weather">
-                        <div class="loading"></div>
-                    </div>
-                </div>
+            <div class="gift-summary">
+                <h3>
+                    <span>🛍️</span>
+                    Shopping Summary
+                </h3>
+                <p id="summaryText">Loading gifts...</p>
             </div>
         </div>
     </div>
 
+    <!-- Add Gift Modal -->
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <div class="modal-header">🎁 Add New Gift</div>
+            <form id="addGiftForm">
+                <div class="form-group">
+                    <label for="personName">Person's Name</label>
+                    <input type="text" id="personName" placeholder="Enter name..." required>
+                </div>
+                <div class="form-group">
+                    <label for="giftName">Gift Item</label>
+                    <input type="text" id="giftName" placeholder="Enter gift..." required>
+                </div>
+                <div class="form-group">
+                    <label for="giftDescription">Description (Optional)</label>
+                    <textarea id="giftDescription" placeholder="Add a description..." rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="giftEmoji">Emoji (Optional)</label>
+                    <input type="text" id="giftEmoji" placeholder="🎁" maxlength="2">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Gift</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            function updateAllInfo() {
-                const now = new Date();
-                const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+        // Gift data storage
+        let gifts = [];
 
-                // Update Galway time (IST is UTC+1)
-                const galwayTime = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Dublin" }));
-                document.getElementById('galway-date').textContent = galwayTime.toLocaleDateString('en-US', optionsDate);
-                document.getElementById('galway-time').textContent = galwayTime.toLocaleTimeString('en-GB', optionsTime);
-
-                // Update Tokyo time (JST is UTC+9)
-                const tokyoTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Tokyo" }));
-                document.getElementById('tokyo-date').textContent = tokyoTime.toLocaleDateString('en-US', optionsDate);
-                document.getElementById('tokyo-time').textContent = tokyoTime.toLocaleTimeString('en-GB', optionsTime);
+        // Default gifts
+        const defaultGifts = [
+            {
+                id: 1,
+                person: "Lilas",
+                gift: "Hatsu Character",
+                description: "Perfect anime character for a fan",
+                emoji: "🌸"
+            },
+            {
+                id: 2,
+                person: "Grey",
+                gift: "Dragon Ball Z Character (Fridge Magnet)",
+                description: "Cool collectible for the kitchen",
+                emoji: "🐉"
+            },
+            {
+                id: 3,
+                person: "Peadar",
+                gift: "Abacus",
+                description: "Traditional Japanese calculating tool",
+                emoji: "🧮"
             }
+        ];
 
-            function updateCountdown() {
-                const countdownEl = document.getElementById('countdown-days');
-                const countdownCard = document.getElementById('countdown-card');
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                
-                const departureDate = new Date("2025-07-11");
-                departureDate.setHours(0, 0, 0, 0);
-                
-                const diffTime = departureDate - today;
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                
-                if (diffDays > 0) {
-                    countdownEl.textContent = diffDays;
-                    countdownCard.querySelector('.countdown-label').textContent = diffDays === 1 ? "day to go" : "days to go";
-                } else if (diffDays === 0) {
-                    countdownEl.textContent = "TODAY!";
-                    countdownCard.querySelector('.countdown-label').textContent = "Departure day!";
-                } else {
-                    countdownCard.style.display = 'none';
-                }
+        // Load gifts from localStorage or use defaults
+        function loadGifts() {
+            const saved = localStorage.getItem('japanTripGifts');
+            if (saved) {
+                gifts = JSON.parse(saved);
+            } else {
+                gifts = [...defaultGifts];
+                saveGifts();
             }
+            renderGifts();
+        }
 
-            async function fetchRealWeatherData(city, lat, lon) {
-                try {
-                    // Visual Crossing Weather API supports CORS
-                    const apiKey = '5SY47VHA6EUEPT552HUJLA6L3';
-                    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${lat},${lon}?unitGroup=metric&include=current,days&key=${apiKey}&contentType=json`);
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    
-                    const getWeatherIcon = (icon) => {
-                        const iconMap = {
-                            'clear-day': '☀️',
-                            'clear-night': '🌙',
-                            'partly-cloudy-day': '🌤️',
-                            'partly-cloudy-night': '☁️',
-                            'cloudy': '☁️',
-                            'rain': '🌧️',
-                            'showers-day': '🌦️',
-                            'showers-night': '🌧️',
-                            'thunder-rain': '⛈️',
-                            'thunder-showers-day': '⛈️',
-                            'thunder-showers-night': '⛈️',
-                            'snow': '❄️',
-                            'snow-showers-day': '🌨️',
-                            'snow-showers-night': '❄️',
-                            'fog': '🌫️',
-                            'wind': '💨'
-                        };
-                        return iconMap[icon] || '🌤️';
-                    };
-                    
-                    return {
-                        current: {
-                            temp: Math.round(data.currentConditions.temp),
-                            icon: getWeatherIcon(data.currentConditions.icon),
-                            desc: data.currentConditions.conditions,
-                            humidity: data.currentConditions.humidity,
-                            windSpeed: data.currentConditions.windspeed
-                        },
-                        tomorrow: {
-                            temp: Math.round(data.days[1].tempmax),
-                            icon: getWeatherIcon(data.days[1].icon),
-                            desc: data.days[1].conditions,
-                            minTemp: Math.round(data.days[1].tempmin)
-                        }
-                    };
-                } catch (error) {
-                    console.error(`Error with Visual Crossing API for ${city}:`, error);
-                    
-                    // Final fallback: Create realistic demo data with a note
-                    return {
-                        current: {
-                            temp: city === 'tokyo' ? 28 : 18,
-                            icon: city === 'tokyo' ? '🌤️' : '🌧️',
-                            desc: 'Demo Data (API Key Needed)',
-                            isDemo: true
-                        },
-                        tomorrow: {
-                            temp: city === 'tokyo' ? 30 : 20,
-                            icon: city === 'tokyo' ? '☀️' : '⛅',
-                            desc: 'Demo Data',
-                            isDemo: true
-                        }
-                    };
-                }
-            }
+        // Save gifts to localStorage
+        function saveGifts() {
+            localStorage.setItem('japanTripGifts', JSON.stringify(gifts));
+        }
 
-            async function updateWeather() {
-                const cities = {
-                    tokyo: { lat: 35.6762, lon: 139.6503 },
-                    galway: { lat: 53.2744, lon: -9.0492 }
-                };
-
-                for (const [city, coords] of Object.entries(cities)) {
-                    try {
-                        const weather = await fetchRealWeatherData(city, coords.lat, coords.lon);
-                        
-                        if (weather) {
-                            document.getElementById(`${city}-current-weather`).innerHTML = 
-                                `<span class="weather-icon">${weather.current.icon}</span> ${weather.current.temp}°C`;
-                            document.getElementById(`${city}-tomorrow-weather`).innerHTML = 
-                                `<span class="weather-icon">${weather.tomorrow.icon}</span> ${weather.tomorrow.temp}°C`;
-                        } else {
-                            throw new Error('No weather data available');
-                        }
-                    } catch (error) {
-                        console.error(`Failed to get weather for ${city}:`, error);
-                        document.getElementById(`${city}-current-weather`).innerHTML = 
-                            '<span class="error-message">Weather unavailable</span>';
-                        document.getElementById(`${city}-tomorrow-weather`).innerHTML = 
-                            '<span class="error-message">Get API key</span>';
-                    }
-                }
-            }
-
-            // Initialize
-            updateAllInfo();
-            updateCountdown();
-            updateWeather();
+        // Render gifts in the UI
+        function renderGifts() {
+            const grid = document.getElementById('giftGrid');
+            const summary = document.getElementById('summaryText');
             
-            // Update every second
-            setInterval(updateAllInfo, 1000);
+            if (gifts.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No gifts yet!</h3>
+                        <p>Click "Add New Gift" to start building your gift list.</p>
+                    </div>
+                `;
+                summary.textContent = "No gifts added yet. Start planning your perfect Japan trip souvenirs!";
+                return;
+            }
+
+            grid.innerHTML = gifts.map((gift, index) => `
+                <div class="gift-item" style="animation-delay: ${index * 0.1}s">
+                    <div class="gift-person">
+                        <div class="gift-person-name">
+                            <span class="gift-emoji">${gift.emoji || '👤'}</span>
+                            ${gift.person}
+                        </div>
+                        <div class="gift-actions">
+                            <button class="delete-btn" onclick="deleteGift(${gift.id})">🗑️</button>
+                        </div>
+                    </div>
+                    <div class="gift-description">${gift.description || 'No description'}</div>
+                    <div class="gift-name">${gift.gift}</div>
+                </div>
+            `).join('');
+
+            // Update summary
+            const count = gifts.length;
+            const people = [...new Set(gifts.map(g => g.person))].length;
+            summary.textContent = `${count} gift${count !== 1 ? 's' : ''} planned for ${people} person${people !== 1 ? 's' : ''}. Perfect souvenirs from our Japan adventure!`;
+        }
+
+        // Open add modal
+        function openAddModal() {
+            document.getElementById('addModal').classList.add('show');
+            document.getElementById('personName').focus();
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('addModal').classList.remove('show');
+            document.getElementById('addGiftForm').reset();
+        }
+
+        // Add new gift
+        document.getElementById('addGiftForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // Update countdown every minute
-            setInterval(updateCountdown, 60000);
-            
-            // Update weather every 15 minutes (real APIs have rate limits)
-            setInterval(updateWeather, 15 * 60 * 1000);
+            const person = document.getElementById('personName').value.trim();
+            const gift = document.getElementById('giftName').value.trim();
+            const description = document.getElementById('giftDescription').value.trim();
+            const emoji = document.getElementById('giftEmoji').value.trim();
+
+            if (!person || !gift) {
+                alert('Please enter both person name and gift item.');
+                return;
+            }
+
+            const newGift = {
+                id: Math.max(0, ...gifts.map(g => g.id)) + 1,
+                person,
+                gift,
+                description: description || '',
+                emoji: emoji || '🎁'
+            };
+
+            gifts.push(newGift);
+            saveGifts();
+            renderGifts();
+            closeModal();
         });
+
+        // Delete gift
+        function deleteGift(id) {
+            if (confirm('Are you sure you want to remove this gift from your list?')) {
+                gifts = gifts.filter(g => g.id !== id);
+                saveGifts();
+                renderGifts();
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('addModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            } else if (e.key === 'n' && e.ctrlKey) {
+                e.preventDefault();
+                openAddModal();
+            }
+        });
+
+        // Initialize
+        loadGifts();
     </script>
 </body>
 </html>
