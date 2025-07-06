@@ -257,23 +257,7 @@
             transform: translateY(-1px);
         }
 
-        .reset-button {
-            width: 100%;
-            padding: 12px;
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 8px;
-            color: #ff6b6b;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
 
-        .reset-button:hover {
-            background: rgba(239, 68, 68, 0.3);
-            transform: translateY(-1px);
-        }
 
         .category {
             margin-bottom: 30px;
@@ -514,7 +498,6 @@
                     </select>
                     <button class="add-button" onclick="addNewItem()">Add</button>
                 </div>
-                <button class="reset-button" onclick="resetAllItems()">🔄 Reset All Items</button>
             </div>
             
             <div id="checklistContainer"></div>
@@ -741,16 +724,7 @@
             closeModal();
         }
 
-        // Reset all items to default
-        function resetAllItems() {
-            if (confirm('Are you sure you want to reset all items to default? This will remove any custom items and clear all packed status.')) {
-                items = JSON.parse(JSON.stringify(defaultItems));
-                packedItems = new Set();
-                saveData();
-                renderChecklist();
-                updateProgress();
-            }
-        }
+
 
         // Update progress
         function updateProgress() {
