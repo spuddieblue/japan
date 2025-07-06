@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#0f172a">
-    <meta name="android-app-capable" content="yes">
-    <meta name="android-theme-color" content="#0f172a">
-    <meta name="msapplication-navbutton-color" content="#0f172a">
-    <meta name="msapplication-TileColor" content="#0f172a">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Japan Plan - Home</title>
     <style>
         :root {
@@ -52,21 +46,11 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            -webkit-user-select: none;
-            -webkit-touch-callout: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .app-container {
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            flex-direction: column;
             position: relative;
-            width: 100vw;
         }
 
-        .bg-animation {
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
@@ -78,13 +62,14 @@
             opacity: 0.9;
         }
 
-        .bg-animation::before {
+        body::after {
             content: '';
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: -1;
             background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
                         radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
                         radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
@@ -97,27 +82,18 @@
             66% { transform: translateY(10px) rotate(-1deg); }
         }
 
-        .header {
-            padding: env(safe-area-inset-top, 10px) 20px 20px;
-            padding-top: max(env(safe-area-inset-top), 35px);
-            text-align: center;
-            position: relative;
-        }
-
-        .header h1 {
-            font-size: clamp(24px, 8vw, 32px);
-            font-weight: 800;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #fff 0%, #e2e8f0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.5px;
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .nav-container {
             margin-bottom: 30px;
-            padding: 0 20px;
+            padding: 0 5px;
         }
 
         .nav-tabs {
@@ -137,7 +113,7 @@
             font-size: 11px;
             font-weight: 700;
             text-align: center;
-            color: var(--gray-light);
+            color: var(--white);
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
@@ -155,26 +131,22 @@
 
         .nav-tab:not(.active):hover {
             color: var(--white);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 0 20px calc(env(safe-area-inset-bottom, 20px) + 80px) 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .card {
             background: rgba(15, 23, 42, 0.6);
-            border-radius: 24px;
-            padding: 24px;
-            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(24px);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .card::before {
@@ -184,12 +156,7 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
         }
 
         .countdown-card {
@@ -198,6 +165,7 @@
             border: 2px solid rgba(255, 255, 255, 0.3);
             position: relative;
             overflow: hidden;
+            animation: countdown-glow 3s ease-in-out infinite;
         }
 
         .countdown-card::before {
@@ -210,21 +178,9 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
         }
 
-
-
         .countdown-card > * {
             position: relative;
             z-index: 1;
-        }
-
-        .countdown-card h2 {
-            font-size: 16px;
-            font-weight: 600;
-            opacity: 0.95;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .countdown-number {
@@ -249,17 +205,12 @@
             letter-spacing: 0.5px;
         }
 
-        .time-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
         .time-card {
             padding: 24px;
-            border-radius: 20px;
+            border-radius: 24px;
             position: relative;
             overflow: hidden;
+            margin-bottom: 20px;
         }
 
         .time-card::before {
@@ -383,50 +334,6 @@
             font-weight: 500;
         }
 
-        .weather-update-time {
-            font-size: 12px;
-            opacity: 0.7;
-            text-align: center;
-            margin-top: 12px;
-            font-style: italic;
-        }
-
-        @media (min-width: 768px) {
-            .app-container {
-                max-width: 100vw;
-                margin: 0;
-                border: none;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav-tab {
-                padding: 10px 4px;
-                font-size: 10px;
-                min-height: 40px;
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-in {
-            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
-
         .pulse {
             animation: pulse 2s infinite;
         }
@@ -449,95 +356,94 @@
             }
         }
 
-        .countdown-card {
-            animation: countdown-glow 3s ease-in-out infinite;
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="app-container">    
-        <span class="bg-animation"></span>
-                    
-
+    <div class="container">
         <div style="text-align: center;">
             <img src="images/japan_plan.png" width="94%" alt="Japan Trip Plan">
             <nav class="nav-container">
                 <div class="nav-tabs">
-                    <a href="index.html" class="nav-tab">Home</a>
+                    <a href="index.html" class="nav-tab active">Home</a>
                     <a href="itinerary.html" class="nav-tab">Itinerary</a>
-                    <a href="calculator.html" class="nav-tab active">Calculator</a>
+                    <a href="calculator.html" class="nav-tab">Calculator</a>
                     <a href="#" class="nav-tab">Phrases</a>
                     <a href="#" class="nav-tab">Gifts</a>
                 </div>
             </nav>
         </div>
 
-        <main class="main-content">
-            <div class="card countdown-card animate-in" id="countdown-card">
-                <div class="countdown-number" id="countdown-days">Loading...</div>
-                <div class="countdown-label">days to go</div>
-            </div>
+        <div class="card countdown-card" id="countdown-card">
+            <div class="countdown-number" id="countdown-days">Loading...</div>
+            <div class="countdown-label">days to go</div>
+        </div>
 
-            <div class="time-grid">
-                <div class="card time-card tokyo-card animate-in">
-                    <div class="time-card-content">
-                        <div class="city-info">
-                            <div class="city-name">
-                                <span class="city-flag">🗼</span>
-                                Tokyo
-                            </div>
-                        </div>
-                        <div class="time-info">
-                            <div class="time-display pulse" id="tokyo-time">Loading...</div>
-                            <div class="date-display" id="tokyo-date">Loading date...</div>
-                        </div>
-                    </div>
-                    <div class="weather-info">
-                        <div class="weather-item">
-                            <div class="weather-label">Current</div>
-                            <div class="weather-value" id="tokyo-current-weather">
-                                <div class="loading"></div>
-                            </div>
-                        </div>
-                        <div class="weather-item">
-                            <div class="weather-label">Tomorrow</div>
-                            <div class="weather-value" id="tokyo-tomorrow-weather">
-                                <div class="loading"></div>
-                            </div>
-                        </div>
+        <div class="card time-card tokyo-card">
+            <div class="time-card-content">
+                <div class="city-info">
+                    <div class="city-name">
+                        <span class="city-flag">🗼</span>
+                        Tokyo
                     </div>
                 </div>
-
-                <div class="card time-card galway-card animate-in">
-                    <div class="time-card-content">
-                        <div class="city-info">
-                            <div class="city-name">
-                                <span class="city-flag">🍀</span>
-                                Galway
-                            </div>
-                        </div>
-                        <div class="time-info">
-                            <div class="time-display pulse" id="galway-time">Loading...</div>
-                            <div class="date-display" id="galway-date">Loading date...</div>
-                        </div>
+                <div class="time-info">
+                    <div class="time-display pulse" id="tokyo-time">Loading...</div>
+                    <div class="date-display" id="tokyo-date">Loading date...</div>
+                </div>
+            </div>
+            <div class="weather-info">
+                <div class="weather-item">
+                    <div class="weather-label">Current</div>
+                    <div class="weather-value" id="tokyo-current-weather">
+                        <div class="loading"></div>
                     </div>
-                    <div class="weather-info">
-                        <div class="weather-item">
-                            <div class="weather-label">Current</div>
-                            <div class="weather-value" id="galway-current-weather">
-                                <div class="loading"></div>
-                            </div>
-                        </div>
-                        <div class="weather-item">
-                            <div class="weather-label">Tomorrow</div>
-                            <div class="weather-value" id="galway-tomorrow-weather">
-                                <div class="loading"></div>
-                            </div>
-                        </div>
+                </div>
+                <div class="weather-item">
+                    <div class="weather-label">Tomorrow</div>
+                    <div class="weather-value" id="tokyo-tomorrow-weather">
+                        <div class="loading"></div>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
+
+        <div class="card time-card galway-card">
+            <div class="time-card-content">
+                <div class="city-info">
+                    <div class="city-name">
+                        <span class="city-flag">🍀</span>
+                        Galway
+                    </div>
+                </div>
+                <div class="time-info">
+                    <div class="time-display pulse" id="galway-time">Loading...</div>
+                    <div class="date-display" id="galway-date">Loading date...</div>
+                </div>
+            </div>
+            <div class="weather-info">
+                <div class="weather-item">
+                    <div class="weather-label">Current</div>
+                    <div class="weather-value" id="galway-current-weather">
+                        <div class="loading"></div>
+                    </div>
+                </div>
+                <div class="weather-item">
+                    <div class="weather-label">Tomorrow</div>
+                    <div class="weather-value" id="galway-tomorrow-weather">
+                        <div class="loading"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -579,25 +485,6 @@
                 } else {
                     countdownCard.style.display = 'none';
                 }
-            }
-
-            function getWeatherIcon(condition) {
-                const icons = {
-                    'clear': '☀️',
-                    'sunny': '☀️',
-                    'partly-cloudy': '⛅',
-                    'cloudy': '☁️',
-                    'overcast': '☁️',
-                    'rain': '🌧️',
-                    'heavy-rain': '🌧️',
-                    'showers': '🌦️',
-                    'snow': '❄️',
-                    'thunderstorm': '⛈️',
-                    'fog': '🌫️',
-                    'mist': '🌫️',
-                    'wind': '💨'
-                };
-                return icons[condition] || '🌤️';
             }
 
             async function fetchRealWeatherData(city, lat, lon) {
@@ -652,42 +539,6 @@
                 } catch (error) {
                     console.error(`Error with Visual Crossing API for ${city}:`, error);
                     
-                    // Try wttr.in as fallback (sometimes works)
-                    try {
-                        const wttrResponse = await fetch(`https://wttr.in/${city}?format=j1`);
-                        if (wttrResponse.ok) {
-                            const wttrData = await wttrResponse.json();
-                            
-                            const getWeatherIcon = (code) => {
-                                const codes = {
-                                    '113': '☀️', '116': '🌤️', '119': '☁️', '122': '☁️',
-                                    '143': '🌫️', '176': '🌦️', '200': '⛈️', '293': '🌦️',
-                                    '296': '🌧️', '302': '🌧️', '308': '🌧️', '353': '🌦️',
-                                    '356': '🌧️', '386': '⛈️', '389': '⛈️'
-                                };
-                                return codes[code] || '🌤️';
-                            };
-                            
-                            const current = wttrData.current_condition[0];
-                            const tomorrow = wttrData.weather[1];
-                            
-                            return {
-                                current: {
-                                    temp: parseInt(current.temp_C),
-                                    icon: getWeatherIcon(current.weatherCode),
-                                    desc: current.weatherDesc[0].value
-                                },
-                                tomorrow: {
-                                    temp: parseInt(tomorrow.maxtempC),
-                                    icon: getWeatherIcon(tomorrow.hourly[4].weatherCode),
-                                    desc: tomorrow.hourly[4].weatherDesc[0].value
-                                }
-                            };
-                        }
-                    } catch (wttrError) {
-                        console.error('wttr.in also failed:', wttrError);
-                    }
-                    
                     // Final fallback: Create realistic demo data with a note
                     return {
                         current: {
@@ -721,13 +572,6 @@
                                 `<span class="weather-icon">${weather.current.icon}</span> ${weather.current.temp}°C`;
                             document.getElementById(`${city}-tomorrow-weather`).innerHTML = 
                                 `<span class="weather-icon">${weather.tomorrow.icon}</span> ${weather.tomorrow.temp}°C`;
-                            
-                            const updateTime = new Date().toLocaleTimeString('en-GB', { 
-                                hour: '2-digit', 
-                                minute: '2-digit' 
-                            });
-                            
-                            const dataType = weather.current.isDemo ? 'Demo data' : '';
                         } else {
                             throw new Error('No weather data available');
                         }
@@ -737,8 +581,6 @@
                             '<span class="error-message">Weather unavailable</span>';
                         document.getElementById(`${city}-tomorrow-weather`).innerHTML = 
                             '<span class="error-message">Get API key</span>';
-                        document.getElementById(`${city}-update-time`).textContent = 
-                            'Get free API key at visualcrossing.com for real data';
                     }
                 }
             }
