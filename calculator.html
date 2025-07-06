@@ -147,10 +147,6 @@
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            background-image: url('images/yen.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
         }
 
         .card::before {
@@ -159,25 +155,8 @@
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            background: rgba(15, 23, 42, 0.3);
-            z-index: 1;
-        }
-
-        .card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            z-index: 2;
-        }
-
-        .card > * {
-            position: relative;
-            z-index: 2;
         }
 
         .date-header {
@@ -190,16 +169,12 @@
 
         .calculator-input-group {
             margin-bottom: 25px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .calculator-input-group label {
             display: block;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--white);
             margin-bottom: 8px;
             font-size: 18px;
         }
@@ -208,11 +183,11 @@
             width: 100%;
             padding: 16px;
             border-radius: 12px;
-            border: 1px solid rgba(15, 23, 42, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             font-size: 24px;
             text-align: right;
-            background: rgba(255, 255, 255, 0.8);
-            color: var(--dark);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
             backdrop-filter: blur(10px);
             font-weight: 600;
             transition: all 0.3s ease;
@@ -222,11 +197,11 @@
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .calculator-input-group input::placeholder {
-            color: var(--gray);
+            color: var(--gray-light);
         }
 
         .rate-note {
@@ -265,16 +240,12 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
             margin-bottom: 25px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .quick-amount {
             padding: 12px 8px;
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(15, 23, 42, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
@@ -284,7 +255,7 @@
         }
 
         .quick-amount:hover {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
 
@@ -296,7 +267,7 @@
         }
 
         .quick-amount .label {
-            color: var(--gray);
+            color: var(--gray-light);
         }
 
         .clear-button {
