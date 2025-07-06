@@ -464,21 +464,6 @@
             .category-tabs {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
-            .voice-selector {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-            }
-            
-            .voice-label {
-                margin-right: 0;
-                margin-bottom: 4px;
-            }
-            
-            #voiceButtons {
-                max-height: 150px;
-            }
         }
     </style>
 </head>
@@ -492,7 +477,7 @@
                     <a href="itinerary.html" class="nav-tab">Itinerary</a>
                     <a href="calculator.html" class="nav-tab">Calculator</a>
                     <a href="phrases.html" class="nav-tab active">Phrases</a>
-                    <a href="gifts.html" class="nav-tab">Gifts</a>
+                    <a href="#" class="nav-tab">Gifts</a>
                 </div>
             </nav>
         </div>
@@ -501,17 +486,6 @@
             <div class="date-header">🗣️ Essential Phrases</div>
             
             <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search phrases..." oninput="searchPhrases()">
-            
-            <div class="voice-selector">
-                <div class="voice-label">🗣️ Voice:</div>
-                <button class="voice-btn" id="autoBtn" onclick="selectVoiceMode('auto')">🤖 Auto</button>
-                <button class="voice-btn active" id="manualBtn" onclick="selectVoiceMode('manual')">📋 Choose</button>
-            </div>
-            
-            <div class="voice-list" id="voiceList" style="display: block;">
-                <div class="voice-label">Available Japanese Voices:</div>
-                <div id="voiceButtons"></div>
-            </div>
             
             <div class="category-tabs">
                 <div class="category-tab active" onclick="showCategory('basics')">Basics</div>
@@ -571,6 +545,42 @@
                         <div class="english">Do you speak English?</div>
                         <div class="japanese">英語を話せますか？</div>
                         <div class="romaji">Eigo wo hanasemasu ka?</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">My name is Mike</div>
+                        <div class="japanese">私の名前はマイクです</div>
+                        <div class="romaji">Watashi no namae wa Maiku desu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">My name is Sharon</div>
+                        <div class="japanese">私の名前はシャロンです</div>
+                        <div class="romaji">Watashi no namae wa Sharon desu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">I'm from Ireland</div>
+                        <div class="japanese">アイルランド出身です</div>
+                        <div class="romaji">Airurando shusshin desu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">We're from Ireland</div>
+                        <div class="japanese">私たちはアイルランド出身です</div>
+                        <div class="romaji">Watashitachi wa Airurando shusshin desu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">We're Irish</div>
+                        <div class="japanese">私たちはアイルランド人です</div>
+                        <div class="romaji">Watashitachi wa Airurando-jin desu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Japan is fantastic</div>
+                        <div class="japanese">日本は素晴らしいです</div>
+                        <div class="romaji">Nihon wa subarashii desu</div>
                         <div class="play-icon">▶</div>
                     </div>
                 </div>
@@ -832,128 +842,13 @@
 
             <div class="tip-box">
                 <h4>💡 Pro Tip</h4>
-                <p>Try different voices from the list above to find the male voice you prefer! Each voice button plays a test "hello" when clicked. Once you've found your favorite, tap any phrase to practice pronunciation!</p>
+                <p>Tap any phrase to practice pronunciation! Bowing slightly when greeting shows respect. Adding "onegaishimasu" (please) makes requests more polite. The personal introduction phrases are perfect for meeting new people!</p>
             </div>
         </div>
     </div>
 
     <script>
         let currentSpeech = null;
-        let allJapaneseVoices = [];
-        let selectedVoice = null;
-        let voiceMode = 'manual'; // 'auto' or 'manual'
-
-        // Initialize voice selection when voices are loaded
-        function initializeVoices() {
-            const voices = speechSynthesis.getVoices();
-            
-            // Find all Japanese voices
-            allJapaneseVoices = voices.filter(voice => 
-                voice.lang.includes('ja') || voice.lang.includes('JP')
-            );
-            
-            console.log('All Japanese voices found:', allJapaneseVoices);
-            
-            // Populate the voice selection UI
-            populateVoiceList();
-            
-            // Set default voice to first available
-            if (allJapaneseVoices.length > 0 && !selectedVoice) {
-                selectedVoice = allJapaneseVoices[0];
-                updateVoiceSelection();
-            }
-        }
-
-        function populateVoiceList() {
-            const voiceButtons = document.getElementById('voiceButtons');
-            voiceButtons.innerHTML = '';
-            
-            if (allJapaneseVoices.length === 0) {
-                voiceButtons.innerHTML = '<p style="color: var(--gray-light); font-size: 12px;">No Japanese voices found. Loading...</p>';
-                return;
-            }
-            
-            allJapaneseVoices.forEach((voice, index) => {
-                const button = document.createElement('button');
-                button.className = 'individual-voice-btn';
-                button.onclick = () => selectSpecificVoice(voice);
-                
-                // Try to detect gender from voice name
-                const name = voice.name.toLowerCase();
-                let genderHint = '';
-                if (name.includes('male') || name.includes('man') || 
-                    name.includes('kenji') || name.includes('ichiro') || 
-                    name.includes('takeshi') || name.includes('hiroshi')) {
-                    genderHint = ' 👨';
-                } else if (name.includes('female') || name.includes('woman') ||
-                           name.includes('kyoko') || name.includes('sayaka') ||
-                           name.includes('mei') || name.includes('yuki')) {
-                    genderHint = ' 👩';
-                }
-                
-                button.innerHTML = `
-                    <div class="voice-name">${voice.name}${genderHint}</div>
-                    <div class="voice-details">${voice.lang} • ${voice.localService ? 'Local' : 'Network'}</div>
-                `;
-                
-                voiceButtons.appendChild(button);
-            });
-            
-            updateVoiceSelection();
-        }
-
-        function selectSpecificVoice(voice) {
-            selectedVoice = voice;
-            updateVoiceSelection();
-            
-            // Play a test phrase
-            const testUtterance = new SpeechSynthesisUtterance('こんにちは');
-            testUtterance.voice = voice;
-            testUtterance.lang = 'ja-JP';
-            testUtterance.rate = 0.8;
-            speechSynthesis.speak(testUtterance);
-        }
-
-        function updateVoiceSelection() {
-            document.querySelectorAll('.individual-voice-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            if (selectedVoice) {
-                const buttons = document.querySelectorAll('.individual-voice-btn');
-                buttons.forEach((btn, index) => {
-                    if (allJapaneseVoices[index] === selectedVoice) {
-                        btn.classList.add('active');
-                    }
-                });
-            }
-        }
-
-        function selectVoiceMode(mode) {
-            voiceMode = mode;
-            
-            // Update button states
-            document.querySelectorAll('.voice-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            if (mode === 'auto') {
-                document.getElementById('autoBtn').classList.add('active');
-                document.getElementById('voiceList').style.display = 'none';
-            } else {
-                document.getElementById('manualBtn').classList.add('active');
-                document.getElementById('voiceList').style.display = 'block';
-            }
-        }
-
-        // Load voices when available
-        if (speechSynthesis.onvoiceschanged !== undefined) {
-            speechSynthesis.onvoiceschanged = initializeVoices;
-        }
-        
-        // Also try to load immediately
-        setTimeout(initializeVoices, 100);
-        setTimeout(initializeVoices, 1000); // Backup timing
 
         function showCategory(category) {
             // Hide all categories
@@ -995,11 +890,6 @@
             const utterance = new SpeechSynthesisUtterance(japaneseText);
             utterance.lang = 'ja-JP';
             utterance.rate = 0.8;
-            
-            // Use selected voice if available
-            if (selectedVoice) {
-                utterance.voice = selectedVoice;
-            }
             
             utterance.onend = () => {
                 element.classList.remove('playing');
