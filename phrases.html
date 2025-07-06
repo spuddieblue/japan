@@ -1,24 +1,929 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Japan Plan - Phrases</title>
-    <style>/* Paste the exact same CSS block from index.html here */</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Phrases - Japan Trip</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --gray: #64748b;
+            --gray-light: #94a3b8;
+            --white: #ffffff;
+            --surface: #f8fafc;
+            --surface-dark: #334155;
+            --gradient-1: linear-gradient(135deg, #fefce8 0%, #fb7185 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            --gradient-4: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 100%);
+            --gradient-japan: linear-gradient(135deg, #dc143c 0%, #ff6b6b 50%, #ff4757 100%);
+            --gradient-gold: linear-gradient(135deg, #ffd700 0%, #ffb347 50%, #ff8c42 100%);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'SF Pro Display', sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            z-index: -1;
+            background: var(--gradient-1);
+            opacity: 0.9;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-container {
+            margin-bottom: 30px;
+            padding: 0 5px;
+        }
+
+        .nav-tabs {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 4px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 16px;
+            padding: 4px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-tab {
+            padding: 12px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+        }
+
+        .nav-tab.active {
+            background: var(--white);
+            color: var(--dark);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-tab:not(.active):hover {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(24px);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .date-header {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .category-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 6px;
+        }
+
+        .category-tab {
+            padding: 10px 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--gray-light);
+        }
+
+        .category-tab.active {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .category-tab:not(.active):hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+        }
+
+        .phrases-container {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .phrases-container::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .phrases-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .phrases-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .phrase-category {
+            display: none;
+        }
+
+        .phrase-category.active {
+            display: block;
+        }
+
+        .phrase-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .phrase-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .phrase-item.playing {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
+        }
+
+        .english {
+            font-size: 14px;
+            color: var(--white);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .japanese {
+            font-size: 18px;
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 4px;
+            font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+
+        .romaji {
+            font-size: 12px;
+            color: var(--gray-light);
+            font-style: italic;
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .phrase-item:hover .play-icon {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .search-box::placeholder {
+            color: var(--gray-light);
+        }
+
+        .voice-selector {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .voice-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white);
+            margin-right: 8px;
+        }
+
+        .voice-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .voice-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .voice-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .tip-box {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+            color: #6ee7b7;
+        }
+
+        .tip-box h4 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: var(--success);
+        }
+
+        .tip-box p {
+            font-size: 12px;
+            line-height: 1.4;
+            color: #a7f3d0;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .category-tabs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🗣️ Useful Phrases</h1>
-            <nav class="common-menu">
-                <a href="index.html">Home</a>
-                <a href="itinerary.html">Itinerary</a>
-                <a href="calculator.html">Calculator</a>
-                <a href="phrases.html" class="active">Phrases</a>
-                <a href="gifts.html">Gifts</a>
+        <div style="text-align: center;">
+            <img src="images/japan_plan.png" width="94%" alt="Japan Trip Plan">
+            <nav class="nav-container">
+                <div class="nav-tabs">
+                    <a href="index.html" class="nav-tab">Home</a>
+                    <a href="itinerary.html" class="nav-tab">Itinerary</a>
+                    <a href="calculator.html" class="nav-tab">Calculator</a>
+                    <a href="phrases.html" class="nav-tab active">Phrases</a>
+                    <a href="#" class="nav-tab">Gifts</a>
+                </div>
             </nav>
         </div>
+
         <div class="card">
+            <div class="date-header">🗣️ Essential Phrases</div>
+            
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search phrases..." oninput="searchPhrases()">
+            
+            <div class="voice-selector">
+                <div class="voice-label">🗣️ Voice:</div>
+                <button class="voice-btn active" id="maleBtn" onclick="selectVoice('male')">👨 Male</button>
+                <button class="voice-btn" id="femaleBtn" onclick="selectVoice('female')">👩 Female</button>
             </div>
+            
+            <div class="category-tabs">
+                <div class="category-tab active" onclick="showCategory('basics')">Basics</div>
+                <div class="category-tab" onclick="showCategory('travel')">Travel</div>
+                <div class="category-tab" onclick="showCategory('food')">Food</div>
+                <div class="category-tab" onclick="showCategory('shopping')">Shopping</div>
+                <div class="category-tab" onclick="showCategory('emergency')">Emergency</div>
+                <div class="category-tab" onclick="showCategory('polite')">Polite</div>
+            </div>
+
+            <div class="phrases-container">
+                <!-- Basics Category -->
+                <div class="phrase-category active" id="basics">
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Hello / Good morning</div>
+                        <div class="japanese">おはよう / こんにちは</div>
+                        <div class="romaji">Ohayou / Konnichiwa</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Good evening</div>
+                        <div class="japanese">こんばんは</div>
+                        <div class="romaji">Konbanwa</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Thank you</div>
+                        <div class="japanese">ありがとうございます</div>
+                        <div class="romaji">Arigatou gozaimasu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Excuse me / Sorry</div>
+                        <div class="japanese">すみません</div>
+                        <div class="romaji">Sumimasen</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Yes / No</div>
+                        <div class="japanese">はい / いいえ</div>
+                        <div class="romaji">Hai / Iie</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Please</div>
+                        <div class="japanese">お願いします</div>
+                        <div class="romaji">Onegaishimasu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">I don't understand</div>
+                        <div class="japanese">分かりません</div>
+                        <div class="romaji">Wakarimasen</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Do you speak English?</div>
+                        <div class="japanese">英語を話せますか？</div>
+                        <div class="romaji">Eigo wo hanasemasu ka?</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                </div>
+
+                <!-- Travel Category -->
+                <div class="phrase-category" id="travel">
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Where is...?</div>
+                        <div class="japanese">...はどこですか？</div>
+                        <div class="romaji">...wa doko desu ka?</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Train station</div>
+                        <div class="japanese">駅</div>
+                        <div class="romaji">Eki</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Hotel</div>
+                        <div class="japanese">ホテル</div>
+                        <div class="romaji">Hoteru</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Bathroom / Toilet</div>
+                        <div class="japanese">トイレ</div>
+                        <div class="romaji">Toire</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">How much does it cost?</div>
+                        <div class="japanese">いくらですか？</div>
+                        <div class="romaji">Ikura desu ka?</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">One ticket to...</div>
+                        <div class="japanese">...まで一枚お願いします</div>
+                        <div class="romaji">...made ichimai onegaishimasu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">What time?</div>
+                        <div class="japanese">何時ですか？</div>
+                        <div class="romaji">Nanji desu ka?</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">I'm lost</div>
+                        <div class="japanese">道に迷いました</div>
+                        <div class="romaji">Michi ni mayoimashita</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                </div>
+
+                <!-- Food Category -->
+                <div class="phrase-category" id="food">
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Menu, please</div>
+                        <div class="japanese">メニューをお願いします</div>
+                        <div class="romaji">Menyuu wo onegaishimasu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">This one, please</div>
+                        <div class="japanese">これをお願いします</div>
+                        <div class="romaji">Kore wo onegaishimasu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Water, please</div>
+                        <div class="japanese">水をお願いします</div>
+                        <div class="romaji">Mizu wo onegaishimasu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">The check, please</div>
+                        <div class="japanese">お会計お願いします</div>
+                        <div class="romaji">Okaikei onegaishimasu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Delicious!</div>
+                        <div class="japanese">美味しい！</div>
+                        <div class="romaji">Oishii!</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">I'm vegetarian</div>
+                        <div class="japanese">ベジタリアンです</div>
+                        <div class="romaji">Bejitarian desu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">No meat, please</div>
+                        <div class="japanese">肉なしでお願いします</div>
+                        <div class="romaji">Niku nashi de onegaishimasu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Coffee / Tea</div>
+                        <div class="japanese">コーヒー / お茶</div>
+                        <div class="romaji">Koohii / Ocha</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                </div>
+
+                <!-- Shopping Category -->
+                <div class="phrase-category" id="shopping">
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">How much?</div>
+                        <div class="japanese">いくらですか？</div>
+                        <div class="romaji">Ikura desu ka?</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Can I try this on?</div>
+                        <div class="japanese">試着できますか？</div>
+                        <div class="romaji">Shichaku dekimasu ka?</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Do you have a smaller size?</div>
+                        <div class="japanese">小さいサイズはありますか？</div>
+                        <div class="romaji">Chiisai saizu wa arimasu ka?</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Do you have a larger size?</div>
+                        <div class="japanese">大きいサイズはありますか？</div>
+                        <div class="romaji">Ookii saizu wa arimasu ka?</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">I'll take this</div>
+                        <div class="japanese">これにします</div>
+                        <div class="romaji">Kore ni shimasu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Can I pay by card?</div>
+                        <div class="japanese">カードで払えますか？</div>
+                        <div class="romaji">Kaado de haraemasu ka?</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Receipt, please</div>
+                        <div class="japanese">レシートをお願いします</div>
+                        <div class="romaji">Reshiito wo onegaishimasu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Just looking</div>
+                        <div class="japanese">見ているだけです</div>
+                        <div class="romaji">Mite iru dake desu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                </div>
+
+                <!-- Emergency Category -->
+                <div class="phrase-category" id="emergency">
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Help!</div>
+                        <div class="japanese">助けて！</div>
+                        <div class="romaji">Tasukete!</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Call the police</div>
+                        <div class="japanese">警察を呼んでください</div>
+                        <div class="romaji">Keisatsu wo yonde kudasai</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">I need a doctor</div>
+                        <div class="japanese">医者が必要です</div>
+                        <div class="romaji">Isha ga hitsuyou desu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">I'm hurt</div>
+                        <div class="japanese">怪我をしました</div>
+                        <div class="romaji">Kega wo shimashita</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Where is the hospital?</div>
+                        <div class="japanese">病院はどこですか？</div>
+                        <div class="romaji">Byouin wa doko desu ka?</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">I lost my passport</div>
+                        <div class="japanese">パスポートをなくしました</div>
+                        <div class="romaji">Pasupooto wo nakushimashita</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Emergency</div>
+                        <div class="japanese">緊急事態</div>
+                        <div class="romaji">Kinkyuu jitai</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                </div>
+
+                <!-- Polite Category -->
+                <div class="phrase-category" id="polite">
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Excuse me (getting attention)</div>
+                        <div class="japanese">すみません</div>
+                        <div class="romaji">Sumimasen</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">I'm sorry</div>
+                        <div class="japanese">ごめんなさい</div>
+                        <div class="romaji">Gomen nasai</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Thank you very much</div>
+                        <div class="japanese">どうもありがとうございました</div>
+                        <div class="romaji">Doumo arigatou gozaimashita</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">You're welcome</div>
+                        <div class="japanese">どういたしまして</div>
+                        <div class="romaji">Dou itashimashite</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Nice to meet you</div>
+                        <div class="japanese">はじめまして</div>
+                        <div class="romaji">Hajimemashite</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Goodbye</div>
+                        <div class="japanese">さようなら</div>
+                        <div class="romaji">Sayounara</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">See you later</div>
+                        <div class="japanese">また今度</div>
+                        <div class="romaji">Mata kondo</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="phrase-item" onclick="playPhrase(this)">
+                        <div class="english">Pardon me (passing through)</div>
+                        <div class="japanese">失礼します</div>
+                        <div class="romaji">Shitsurei shimasu</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <h4>💡 Pro Tip</h4>
+                <p>Choose your preferred voice type above, then tap any phrase to practice pronunciation! Bowing slightly when greeting shows respect. Adding "onegaishimasu" (please) makes requests more polite.</p>
+            </div>
+        </div>
     </div>
+
+    <script>
+        let currentSpeech = null;
+        let maleJapaneseVoices = [];
+        let femaleJapaneseVoices = [];
+        let selectedVoiceType = 'male'; // Default to male
+
+        // Initialize voice selection when voices are loaded
+        function initializeVoices() {
+            const voices = speechSynthesis.getVoices();
+            
+            // Reset voice arrays
+            maleJapaneseVoices = [];
+            femaleJapaneseVoices = [];
+            
+            // Find all Japanese voices
+            const japaneseVoices = voices.filter(voice => 
+                voice.lang.includes('ja') || voice.lang.includes('JP')
+            );
+            
+            japaneseVoices.forEach(voice => {
+                const name = voice.name.toLowerCase();
+                
+                // Try to detect male voices by name patterns
+                if (name.includes('male') || name.includes('man') || 
+                    name.includes('kenji') || name.includes('ichiro') || 
+                    name.includes('otoya') || name.includes('hiroshi') ||
+                    name.includes('takeshi') || name.includes('david') ||
+                    name.includes('kyoko male') || name.includes('sayaka male')) {
+                    maleJapaneseVoices.push(voice);
+                }
+                // Try to detect female voices by name patterns
+                else if (name.includes('female') || name.includes('woman') ||
+                         name.includes('kyoko') || name.includes('sayaka') ||
+                         name.includes('mei') || name.includes('yuki') ||
+                         name.includes('haruka') || name.includes('nanako') ||
+                         name.includes('otafuku') || !name.includes('male')) {
+                    femaleJapaneseVoices.push(voice);
+                }
+            });
+            
+            // If we couldn't categorize them, split them roughly in half
+            if (maleJapaneseVoices.length === 0 && femaleJapaneseVoices.length === 0) {
+                const half = Math.ceil(japaneseVoices.length / 2);
+                maleJapaneseVoices = japaneseVoices.slice(0, half);
+                femaleJapaneseVoices = japaneseVoices.slice(half);
+            }
+            
+            console.log('Male voices:', maleJapaneseVoices.map(v => v.name));
+            console.log('Female voices:', femaleJapaneseVoices.map(v => v.name));
+        }
+
+        // Load voices when available
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = initializeVoices;
+        }
+        
+        // Also try to load immediately
+        initializeVoices();
+
+        function selectVoice(type) {
+            selectedVoiceType = type;
+            
+            // Update button states
+            document.querySelectorAll('.voice-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (type === 'male') {
+                document.getElementById('maleBtn').classList.add('active');
+            } else {
+                document.getElementById('femaleBtn').classList.add('active');
+            }
+        }
+
+        function showCategory(category) {
+            // Hide all categories
+            document.querySelectorAll('.phrase-category').forEach(cat => {
+                cat.classList.remove('active');
+            });
+            
+            // Show selected category
+            document.getElementById(category).classList.add('active');
+            
+            // Update tab states
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Clear search
+            document.getElementById('searchBox').value = '';
+        }
+
+        function playPhrase(element) {
+            // Stop any current speech
+            if (currentSpeech) {
+                speechSynthesis.cancel();
+            }
+            
+            // Remove playing class from all items
+            document.querySelectorAll('.phrase-item').forEach(item => {
+                item.classList.remove('playing');
+            });
+            
+            // Add playing class to current item
+            element.classList.add('playing');
+            
+            // Get the Japanese text
+            const japaneseText = element.querySelector('.japanese').textContent;
+            
+            // Create speech synthesis
+            const utterance = new SpeechSynthesisUtterance(japaneseText);
+            utterance.lang = 'ja-JP';
+            utterance.rate = 0.8;
+            
+            // Select voice based on user preference
+            let selectedVoices = selectedVoiceType === 'male' ? maleJapaneseVoices : femaleJapaneseVoices;
+            
+            if (selectedVoices.length > 0) {
+                utterance.voice = selectedVoices[0]; // Use the first available voice of selected type
+            }
+            
+            // Adjust pitch based on selected voice type
+            utterance.pitch = selectedVoiceType === 'male' ? 0.8 : 1.1;
+            
+            utterance.onend = () => {
+                element.classList.remove('playing');
+                currentSpeech = null;
+            };
+            
+            utterance.onerror = () => {
+                element.classList.remove('playing');
+                currentSpeech = null;
+                // Fallback: just highlight briefly if speech fails
+                setTimeout(() => {
+                    element.classList.remove('playing');
+                }, 1000);
+            };
+            
+            currentSpeech = utterance;
+            speechSynthesis.speak(utterance);
+        }
+
+        function searchPhrases() {
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            const allPhrases = document.querySelectorAll('.phrase-item');
+            
+            if (searchTerm === '') {
+                // Show all phrases in current category
+                allPhrases.forEach(phrase => {
+                    phrase.style.display = 'block';
+                });
+                return;
+            }
+            
+            allPhrases.forEach(phrase => {
+                const english = phrase.querySelector('.english').textContent.toLowerCase();
+                const japanese = phrase.querySelector('.japanese').textContent.toLowerCase();
+                const romaji = phrase.querySelector('.romaji').textContent.toLowerCase();
+                
+                if (english.includes(searchTerm) || japanese.includes(searchTerm) || romaji.includes(searchTerm)) {
+                    phrase.style.display = 'block';
+                } else {
+                    phrase.style.display = 'none';
+                }
+            });
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('searchBox').value = '';
+                searchPhrases();
+                document.getElementById('searchBox').focus();
+            }
+        });
+
+        // Auto-focus search box when page loads
+        window.addEventListener('load', () => {
+            document.getElementById('searchBox').focus();
+        });
+    </script>
 </body>
 </html>
