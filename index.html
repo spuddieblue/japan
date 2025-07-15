@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8">a
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Japan Plan - Home</title>
     
@@ -51,6 +51,7 @@
             --gradient-4: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 100%);
             --gradient-japan: linear-gradient(135deg, #dc143c 0%, #ff6b6b 50%, #ff4757 100%);
             --gradient-gold: linear-gradient(135deg, #ffd700 0%, #ffb347 50%, #ff8c42 100%);
+            --gradient-travel: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
@@ -340,13 +341,12 @@
             font-size: 28px;
         }
 
-        /* 3D Packing List Button Styles */
-        .packing-button-container {
-            margin-top: 20px;
-            margin-bottom: 30px;
+        /* Button Styles */
+        .action-button-container {
+            margin-bottom: 20px;
         }
 
-        .packing-button {
+        .action-button {
             position: relative;
             display: flex;
             align-items: center;
@@ -354,7 +354,6 @@
             gap: 12px;
             padding: 20px 40px;
             width: 100%;
-            background: linear-gradient(145deg, #ff6b6b, #ee5a52, #dc143c);
             border: none;
             border-radius: 20px;
             color: white;
@@ -370,18 +369,25 @@
             
             /* 3D Effect */
             box-shadow: 
-                0 8px 16px rgba(220, 20, 60, 0.3),
+                0 8px 16px rgba(0, 0, 0, 0.3),
                 0 4px 8px rgba(0, 0, 0, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3),
                 inset 0 -1px 0 rgba(0, 0, 0, 0.2);
             
             transform: perspective(1000px) rotateX(0deg) translateY(0px);
-            
-            /* Glow animation */
+        }
+
+        .packing-button {
+            background: linear-gradient(145deg, #ff6b6b, #ee5a52, #dc143c);
             animation: packing-glow 4s ease-in-out infinite;
         }
 
-        .packing-button::before {
+        .travel-button {
+            background: var(--gradient-travel);
+            animation: travel-glow 4s ease-in-out infinite 2s;
+        }
+
+        .action-button::before {
             content: '';
             position: absolute;
             top: 0;
@@ -392,7 +398,7 @@
             transition: left 0.6s;
         }
 
-        .packing-button::after {
+        .action-button::after {
             content: '';
             position: absolute;
             top: 0;
@@ -403,41 +409,139 @@
             pointer-events: none;
         }
 
-        .packing-button:hover {
+        .action-button:hover {
             transform: perspective(1000px) rotateX(-5deg) translateY(-3px);
             box-shadow: 
-                0 12px 24px rgba(220, 20, 60, 0.4),
+                0 12px 24px rgba(0, 0, 0, 0.4),
                 0 8px 16px rgba(0, 0, 0, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.4),
                 inset 0 -1px 0 rgba(0, 0, 0, 0.3);
-            
+        }
+
+        .packing-button:hover {
             background: linear-gradient(145deg, #ff7b7b, #ff5a52, #ec243c);
         }
 
-        .packing-button:hover::before {
+        .travel-button:hover {
+            background: linear-gradient(145deg, #7b8ffa, #8b5bc2, #ff93fb);
+        }
+
+        .action-button:hover::before {
             left: 100%;
         }
 
-        .packing-button:active {
+        .action-button:active {
             transform: perspective(1000px) rotateX(-2deg) translateY(-1px);
             box-shadow: 
-                0 6px 12px rgba(220, 20, 60, 0.3),
+                0 6px 12px rgba(0, 0, 0, 0.3),
                 0 2px 4px rgba(0, 0, 0, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.2),
                 inset 0 -1px 0 rgba(0, 0, 0, 0.4);
         }
 
-        .packing-icon {
+        .button-icon {
             font-size: 24px;
             display: inline-block;
             transform: translateZ(10px);
+        }
+
+        .packing-icon {
             animation: luggage-bounce 2s ease-in-out infinite;
         }
 
-        .packing-text {
+        .travel-icon {
+            animation: plane-fly 3s ease-in-out infinite;
+        }
+
+        .button-text {
             position: relative;
             z-index: 1;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Travel Plan Expandable Section */
+        .travel-plan-container {
+            margin-bottom: 20px;
+        }
+
+        .travel-plan-content {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            margin-top: 12px;
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .travel-plan-content.expanded {
+            max-height: 600px;
+            opacity: 1;
+            padding: 25px;
+        }
+
+        .travel-plan-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #fff;
+            text-align: center;
+            background: var(--gradient-travel);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .travel-plan-section {
+            margin-bottom: 20px;
+        }
+
+        .travel-plan-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #a78bfa;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .plan-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .plan-item:last-child {
+            border-bottom: none;
+        }
+
+        .plan-item-icon {
+            font-size: 18px;
+            margin-right: 12px;
+            min-width: 24px;
+        }
+
+        .plan-item-text {
+            flex: 1;
+        }
+
+        .highlight {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        .flight-number {
+            color: #60a5fa;
+            font-weight: 700;
         }
 
         @keyframes packing-glow {
@@ -446,6 +550,15 @@
             }
             50% {
                 filter: drop-shadow(0 0 20px rgba(220, 20, 60, 0.6));
+            }
+        }
+
+        @keyframes travel-glow {
+            0%, 100% {
+                filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.3));
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.6));
             }
         }
 
@@ -458,6 +571,18 @@
             }
             75% {
                 transform: translateY(-1px) rotate(-1deg);
+            }
+        }
+
+        @keyframes plane-fly {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateX(2px) translateY(-1px) rotate(2deg);
+            }
+            75% {
+                transform: translateX(-1px) translateY(1px) rotate(-2deg);
             }
         }
 
@@ -520,9 +645,13 @@
                 padding: 18px 20px 14px 20px;
             }
 
-            .packing-button {
+            .action-button {
                 padding: 18px 32px;
                 font-size: 16px;
+            }
+
+            .travel-plan-content.expanded {
+                padding: 20px;
             }
         }
     </style>
@@ -605,11 +734,94 @@
             </div>
         </div>
 
-        <!-- 3D Packing List Button -->
-        <div class="packing-button-container">
-            <a href="list.html" class="packing-button">
-                <span class="packing-icon">🧳</span>
-                <span class="packing-text">Packing List</span>
+        <!-- Travel Plan Button -->
+        <div class="travel-plan-container">
+            <div class="action-button-container">
+                <button class="action-button travel-button" id="travel-plan-btn">
+                    <span class="button-icon travel-icon">✈️</span>
+                    <span class="button-text">Travel to Osaka - Plan</span>
+                </button>
+            </div>
+
+            <div class="travel-plan-content" id="travel-plan-content">
+                <div class="travel-plan-title">Departure Day Schedule</div>
+                
+                <div class="travel-plan-section">
+                    <div class="section-title">Morning Prep</div>
+                    <div class="plan-item">
+                        <span class="plan-item-icon">🔋</span>
+                        <span class="plan-item-text">Charge phones</span>
+                    </div>
+                    <div class="plan-item">
+                        <span class="plan-item-icon">📧</span>
+                        <span class="plan-item-text">Check emails</span>
+                    </div>
+                </div>
+
+                <div class="travel-plan-section">
+                    <div class="section-title">Hotel Departure</div>
+                    <div class="plan-item">
+                        <span class="plan-item-icon">🏨</span>
+                        <span class="plan-item-text">Leave hotel @ <span class="highlight">1:00 PM</span></span>
+                    </div>
+                    <div class="plan-item">
+                        <span class="plan-item-icon">🚌</span>
+                        <span class="plan-item-text">Shuttle bus leaves at <span class="highlight">1:20 PM</span></span>
+                    </div>
+                </div>
+
+                <div class="travel-plan-section">
+                    <div class="section-title">Airport</div>
+                    <div class="plan-item">
+                        <span class="plan-item-icon">🛬</span>
+                        <span class="plan-item-text">Our flight is in <span class="highlight">Terminal 1</span></span>
+                    </div>
+                    <div class="plan-item">
+                        <span class="plan-item-icon">⏰</span>
+                        <span class="plan-item-text">Arrive at airport circa <span class="highlight">1:45 PM</span></span>
+                    </div>
+                    <div class="plan-item">
+                        <span class="plan-item-icon">🎫</span>
+                        <span class="plan-item-text">Check in for <span class="flight-number">ALL NIPPON AIRWAYS</span></span>
+                    </div>
+                    <div class="plan-item">
+                        <span class="plan-item-icon">✈️</span>
+                        <span class="plan-item-text">Flight <span class="flight-number">NH 2177</span> to <span class="highlight">Osaka Itami</span></span>
+                        <span class="plan-item-text">Flight <span class="flight-number">NH 2177</span> to <span class="highlight">Airline Reservation Code: ZSEUUS (NH)</span></span>
+                    </div>
+                    <div class="plan-item">
+                        <span class="plan-item-icon">🛫</span>
+                        <span class="plan-item-text">Flight departs at <span class="highlight">17:35</span></span>
+                    </div>
+                </div>
+
+                <div class="travel-plan-section">
+                    <div class="section-title">Arrival in Osaka</div>
+                    <div class="plan-item">
+                        <span class="plan-item-icon">🛬</span>
+                        <span class="plan-item-text">Flight arrives at <span class="highlight">18:55</span></span>
+                    </div>
+                    <div class="plan-item">
+                        <span class="plan-item-icon">🧳</span>
+                        <span class="plan-item-text">Go to baggage reclaim</span>
+                    </div>
+                    <div class="plan-item">
+                        <span class="plan-item-icon">🚐</span>
+                        <span class="plan-item-text">Check for pickup</span>
+                    </div>
+                    <div class="plan-item">
+                        <span class="plan-item-icon">🏨</span>
+                        <span class="plan-item-text">Hotel: <span class="highlight">Hotel Keihan Universal Tower</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Packing List Button -->
+        <div class="action-button-container">
+            <a href="list.html" class="action-button packing-button">
+                <span class="button-icon packing-icon">🧳</span>
+                <span class="button-text">Packing List</span>
             </a>
         </div>
     </div>
@@ -752,6 +964,26 @@
                     }
                 }
             }
+
+            // Travel Plan Toggle
+            const travelPlanBtn = document.getElementById('travel-plan-btn');
+            const travelPlanContent = document.getElementById('travel-plan-content');
+            
+            travelPlanBtn.addEventListener('click', () => {
+                travelPlanContent.classList.toggle('expanded');
+                
+                // Update button text and icon based on state
+                const buttonText = travelPlanBtn.querySelector('.button-text');
+                const buttonIcon = travelPlanBtn.querySelector('.travel-icon');
+                
+                if (travelPlanContent.classList.contains('expanded')) {
+                    buttonText.textContent = 'Hide Plan';
+                    buttonIcon.textContent = '📋';
+                } else {
+                    buttonText.textContent = 'Travel Plan';
+                    buttonIcon.textContent = '✈️';
+                }
+            });
 
             // Initialize
             updateAllInfo();
