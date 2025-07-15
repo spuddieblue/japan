@@ -787,7 +787,6 @@
                     <div class="plan-item">
                         <span class="plan-item-icon">✈️</span>
                         <span class="plan-item-text">Flight <span class="flight-number">NH 2177</span> to <span class="highlight">Osaka Itami - Airline Reservation Code: ZSEUUS (NH)</span></span>
-                        
                     </div>
                     <div class="plan-item">
                         <span class="plan-item-icon">🛫</span>
@@ -998,6 +997,19 @@
             
             // Update weather every 15 minutes (real APIs have rate limits)
             setInterval(updateWeather, 15 * 60 * 1000);
+
+            // Register Service Worker for PWA functionality
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('./sw.js')
+                        .then((registration) => {
+                            console.log('SW registered: ', registration);
+                        })
+                        .catch((registrationError) => {
+                            console.log('SW registration failed: ', registrationError);
+                        });
+                });
+            }
         });
     </script>
 </body>
